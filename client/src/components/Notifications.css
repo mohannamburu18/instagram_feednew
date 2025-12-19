@@ -1,0 +1,243 @@
+.notifications-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.notifications-header {
+  padding: 24px 0 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 24px;
+}
+
+.notifications-header h2 {
+  font-size: 24px;
+  font-weight: 700;
+  color: #fff;
+  margin: 0;
+}
+
+/* Notifications List */
+.notifications-list {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.notif-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.notif-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.notif-section-header h3,
+.notif-section-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  margin: 0 0 8px 0;
+}
+
+.see-all-notif {
+  background: none;
+  border: none;
+  color: #4a9eff;
+  font-size: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 4px 8px;
+}
+
+.see-all-notif:hover {
+  opacity: 0.7;
+}
+
+/* Notification Item */
+.notification-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 0;
+}
+
+.notif-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 0;
+}
+
+.notif-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 600;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.notif-content {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.notif-text {
+  font-size: 14px;
+  color: #fff;
+  line-height: 1.4;
+}
+
+.notif-text strong {
+  font-weight: 600;
+}
+
+.notif-time {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* Right Side Actions */
+.notif-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.notif-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.confirm-btn,
+.delete-btn,
+.follow-notif-btn {
+  padding: 7px 16px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.confirm-btn {
+  background: #4a9eff;
+  color: #fff;
+}
+
+.confirm-btn:hover {
+  background: #3a8eef;
+}
+
+.delete-btn {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.delete-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.follow-notif-btn {
+  background: #4a9eff;
+  color: #fff;
+}
+
+.follow-notif-btn:hover {
+  background: #3a8eef;
+}
+
+.following-label {
+  padding: 7px 16px;
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.7);
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.confirmed-label {
+  font-size: 24px;
+  color: #4ade80;
+}
+
+.notif-thumbnail {
+  width: 44px;
+  height: 44px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+/* Empty State */
+.notifications-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 20px;
+  text-align: center;
+}
+
+.empty-notif-icon {
+  font-size: 80px;
+  margin-bottom: 24px;
+  opacity: 0.5;
+}
+
+.notifications-empty h3 {
+  font-size: 22px;
+  font-weight: 300;
+  margin-bottom: 12px;
+  color: #fff;
+}
+
+.notifications-empty p {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .notifications-container {
+    padding: 16px;
+  }
+
+  .notification-item {
+    padding: 8px 0;
+  }
+
+  .notif-actions {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .confirm-btn,
+  .delete-btn,
+  .follow-notif-btn {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+}
