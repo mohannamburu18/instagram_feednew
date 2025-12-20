@@ -52,8 +52,34 @@ function Feed({ onEditClick }) {
   };
 
   return (
-    <>
-      <div className="feed-grid">
+    <div className="feed-container">
+
+      {/* 🔵 STORIES BAR */}
+      <div className="stories-section">
+        {[
+          { id: 0, name: 'Your Story', icon: '📷', active: true },
+          { id: 1, name: 'Travel', icon: 'T' },
+          { id: 2, name: 'Food', icon: 'F' },
+          { id: 3, name: 'Fitness', icon: 'F' },
+          { id: 4, name: 'Art', icon: 'A' },
+          { id: 5, name: 'Music', icon: 'M' },
+          { id: 6, name: 'Nature', icon: 'N' },
+        ].map(story => (
+          <div key={story.id} className="story-item">
+            <div className="story-avatar">
+              <div className={`story-ring ${story.active ? 'active' : ''}`}>
+                <div className="story-content">
+                  {story.icon}
+                </div>
+              </div>
+            </div>
+            <span className="story-name">{story.name}</span>
+          </div>
+        ))}
+      </div>
+
+      {/* 🔥 EXPLORE GRID */}
+      <div className="explore-grid">
         {posts.map((post, i) => (
           <PostCard
             key={post.id}
@@ -66,6 +92,7 @@ function Feed({ onEditClick }) {
         ))}
       </div>
 
+      {/* POST VIEWER */}
       {viewerOpen && (
         <PostViewer
           posts={posts}
@@ -78,7 +105,7 @@ function Feed({ onEditClick }) {
           onEdit={onEditClick}
         />
       )}
-    </>
+    </div>
   );
 }
 
