@@ -70,15 +70,18 @@ Backend (Server)
 
     
 
-Frontend(Client)
-  Open cmd/Terminal:
-    cd instagram_feednew
-    cd client
-    npm install
-    npm run dev
+Frontend (Client)
+
+Open Command Prompt / Terminal:
+
+cd instagram_feednew
+cd client
+npm install
+npm run dev
+
 
 Open the application in the browser at:
-    http://localhost:5173
+http://localhost:5173
     
 
   
