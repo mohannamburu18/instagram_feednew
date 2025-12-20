@@ -1,7 +1,7 @@
-📸 Instagram Feed Clone<br>
+📸 Instagram Feed Clone<br><br>
 
-GitHub Repository:<br>
-https://github.com/mohannamburu18/instagram_feednew<br>
+GitHub Repository:<br><br>
+https://github.com/mohannamburu18/instagram_feednew<br><br>
 
 Deployment Link:
 https://instagram-feednew-jc9l6pudq-mohans-projects-7ac7513d.vercel.app/
