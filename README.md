@@ -10,6 +10,7 @@ https://instagram-feednew-jc9l6pudq-mohans-projects-7ac7513d.vercel.app/
 
 Track C — Feed (Instagram-style consumption)
     I chose Track C to demonstrate an interactive feed with pagination, modal post viewing, and social actions such as like and save. This track best showcases frontend UX design, API integration, and state management in a production-minded way.
+    
 
 Ⅱ. Features Implemented 🚀
 
@@ -35,6 +36,7 @@ Backend (API) ⚙️
 Persistence 💾
     • SQLite database for posts
     • localStorage for likes and saved posts
+    
 
 Ⅲ. Tech Stack 🧩
 
@@ -51,6 +53,7 @@ Backend
 Deployment ☁️
     • Frontend: Vercel
     • Backend: Render
+    
 
 Ⅳ. How to Run the Project 🏃‍♂️
 
@@ -65,8 +68,20 @@ Backend (Server)
     Backend runs at:
     http://localhost:5000
 
-    Open the application in the browser at:
+    
+
+Frontend(Client)
+  Open cmd/Terminal:
+    cd instagram_feednew
+    cd client
+    npm install
+    npm run dev
+
+Open the application in the browser at:
     http://localhost:5173
+    
+
+  
 
 Ⅴ. API Endpoints 🔗
 Method	Endpoint	Description
@@ -88,6 +103,7 @@ likes	INTEGER
 creator_id	TEXT
 created_at	TIMESTAMP
 Ⅶ. AI Collaboration Log 🤖
+
 
 AI Tools Used
     • ChatGPT
@@ -122,6 +138,7 @@ Correction Applied
       – viewer-media (left – image)
       – viewer-sidebar (right – author, caption, actions)
 
+
 Ⅷ. Trade-offs & Next Improvements 🔮
 
     • Saved posts are stored locally instead of backend (intentional simplification)
@@ -129,11 +146,13 @@ Correction Applied
     • Comments are UI-only (no backend yet)
     • Future: Add Saved Posts page
     • Future: Add real user authentication and profiles
+    
 
 Ⅸ. Sample Data 🧪
 
     • Included via SQLite seed data
     • Images loaded from static URLs
+    
 
 Ⅹ. Demo Video 🎥
 
