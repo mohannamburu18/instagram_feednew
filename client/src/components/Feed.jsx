@@ -12,7 +12,7 @@ function Feed({ onEditClick }) {
   const [viewerOpen, setViewerOpen] = useState(false);
   const [viewerIndex, setViewerIndex] = useState(0);
 
-  // ✅ Load from localStorage
+  // ✅ Load like/save from localStorage
   const [likedPosts, setLikedPosts] = useState(() =>
     JSON.parse(localStorage.getItem('likedPosts')) || []
   );
@@ -20,6 +20,7 @@ function Feed({ onEditClick }) {
     JSON.parse(localStorage.getItem('savedPosts')) || []
   );
 
+  // Current user
   const [currentUser] = useState(() => {
     const saved = localStorage.getItem('currentUser');
     if (saved) return saved;
@@ -31,10 +32,10 @@ function Feed({ onEditClick }) {
   const POSTS_PER_PAGE = 12;
 
   useEffect(() => {
-    fetchPosts(1);
+    fetchPosts();
   }, []);
 
-  // ✅ persist like/save
+  // ✅ Persist like/save
   useEffect(() => {
     localStorage.setItem('likedPosts', JSON.stringify(likedPosts));
   }, [likedPosts]);
@@ -43,30 +44,32 @@ function Feed({ onEditClick }) {
     localStorage.setItem('savedPosts', JSON.stringify(savedPosts));
   }, [savedPosts]);
 
-  const fetchPosts = async (page) => {
+  const fetchPosts = async () => {
     try {
       setLoading(true);
-      const res = await api.get(`/posts?page=${page}&limit=${POSTS_PER_PAGE}`);
+      const res = await api.get(`/posts?page=1&limit=${POSTS_PER_PAGE}`);
       setPosts(res.data.posts);
       setError(null);
-    } catch {
+    } catch (err) {
       setError('Failed to fetch posts');
     } finally {
       setLoading(false);
     }
   };
 
-  // ✅ FIXED like toggle
+  // ✅ Like toggle (FIXED)
   const handleLike = async (postId) => {
     const alreadyLiked = likedPosts.includes(postId);
 
     try {
-      await api.post(`/posts/${postId}/like`);
+      if (!alreadyLiked) {
+        await api.post(`/posts/${postId}/like`);
+      }
 
       setPosts((prev) =>
         prev.map((p) =>
           p.id === postId
-            ? { ...p, likes: alreadyLiked ? p.likes - 1 : p.likes + 1 }
+            ? { ...p, likes: p.likes + (alreadyLiked ? -1 : 1) }
             : p
         )
       );
@@ -77,10 +80,11 @@ function Feed({ onEditClick }) {
           : [...prev, postId]
       );
     } catch (err) {
-      console.error(err);
+      console.error('Like error:', err);
     }
   };
 
+  // ✅ Save toggle (local only)
   const handleSave = (postId) => {
     setSavedPosts((prev) =>
       prev.includes(postId)
@@ -90,10 +94,17 @@ function Feed({ onEditClick }) {
   };
 
   const handleDelete = async (postId) => {
-    await api.delete(`/posts/${postId}`);
-    setPosts((prev) => prev.filter((p) => p.id !== postId));
-    setViewerOpen(false);
+    try {
+      await api.delete(`/posts/${postId}`);
+      setPosts((prev) => prev.filter((p) => p.id !== postId));
+      setViewerOpen(false);
+    } catch (err) {
+      console.error('Delete error:', err);
+    }
   };
+
+  if (loading) return <p className="loading-text">Loading posts...</p>;
+  if (error) return <p className="error-text">{error}</p>;
 
   return (
     <div className="feed-container">
