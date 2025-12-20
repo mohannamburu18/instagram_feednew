@@ -1,81 +1,100 @@
 📸 Instagram Feed Clone
 
-GitHub Repository:
-https://github.com/mohannamburu18/instagram_feednew
+<br><br>
 
-Deployment Link:
-https://instagram-feednew-jc9l6pudq-mohans-projects-7ac7513d.vercel.app/
-
-Ⅰ. Track Chosen + Why 🎯
+I. Track Chosen + Why 🎯
 
 Track C — Feed (Instagram-style consumption)
-    I chose Track C to demonstrate an interactive feed with pagination, modal post viewing, and social actions such as like and save. This track best showcases frontend UX design, API integration, and state management in a production-minded way.
+I chose Track C to demonstrate an interactive feed with pagination, modal post viewing, and social actions like like/save. This track best showcases frontend UX, API integration, and state management in a production-minded way.
 
-Ⅱ. Features Implemented 🚀
+<br><br>
+
+II. Features Implemented 🚀
+4
 
 Frontend (UI) 🎨
-    • Instagram-style feed grid
-    • Post viewer modal (desktop and mobile)
-    • Next / Previous post navigation
-    • Like toggle with count update ❤️
-    • Save (bookmark) toggle using localStorage 🔖
-    • Mobile swipe navigation (up / down)
-    • Floating actions on mobile (like / save)
-    • Responsive design (desktop and mobile)
-    • Empty state and loading state
-    • Error handling UI
+• Instagram-style feed grid
+• Post viewer modal (desktop and mobile)
+• Next / Previous post navigation
+• Like toggle with count update ❤️
+• Save (bookmark) toggle using localStorage 🔖
+• Mobile swipe navigation (up / down)
+• Floating actions on mobile (like / save)
+• Responsive design (desktop and mobile)
+• Empty state and loading state
+• Error handling UI
 
 Backend (API) ⚙️
-    • REST API using Express
-    • Get posts with pagination
-    • Like a post
-    • Create and delete posts
-    • Validation with clear error responses
+• REST API using Express
+• Get posts with pagination
+• Like a post
+• Create / Delete post
+• Validation + error responses
 
 Persistence 💾
-    • SQLite database for posts
-    • localStorage for likes and saved posts
+• SQLite database for posts
+• localStorage for likes and saved posts
 
-Ⅲ. Tech Stack 🧩
+<br><br>
+
+III. Tech Stack 🧩
 
 Frontend
-    • React (Vite)
-    • CSS (custom, responsive)
-    • Axios
+• React (Vite)
+• CSS (custom, responsive)
+• Axios
 
 Backend
-    • Node.js
-    • Express.js
-    • SQLite
+• Node.js
+• Express.js
+• SQLite
 
 Deployment ☁️
-    • Frontend: Vercel
-    • Backend: Render
+• Frontend: Vercel
+• Backend: Render
 
-Ⅳ. How to Run the Project 🏃‍♂️
+<br><br>
 
+IV. How to Run the Project 🏃‍♂️
 Backend (Server)
-    Open Command Prompt / Terminal:
 
-    cd instagram_feednew
-    cd server
-    npm install
-    npm start
+Open Command Prompt / Terminal:
 
-    Backend runs at:
-    http://localhost:5000
+cd instagram_feednew
+cd server
+npm install
+npm start
 
-    Open the application in the browser at:
-    http://localhost:5173
 
-Ⅴ. API Endpoints 🔗
+Backend runs at:
+http://localhost:5000
+
+Frontend (Client)
+
+Open another Command Prompt / Terminal:
+
+cd instagram_feednew
+cd client
+npm install
+npm run dev
+
+
+Frontend runs at:
+http://localhost:5173
+
+<br><br>
+
+V. API Endpoints 🔗
 Method	Endpoint	Description
 GET	/api/posts?page=1&limit=12	Get paginated posts
 POST	/api/posts/:id/like	Like a post
 POST	/api/posts	Create new post
 DELETE	/api/posts/:id	Delete post
 GET	/api/health	Health check
-Ⅵ. Data Model 🗄️
+
+<br><br>
+
+VI. Data Model 🗄️
 
 posts table
 
@@ -87,54 +106,50 @@ image	TEXT
 likes	INTEGER
 creator_id	TEXT
 created_at	TIMESTAMP
-Ⅶ. AI Collaboration Log 🤖
+
+<br><br>
+
+VII. AI Collaboration Log 🤖
 
 AI Tools Used
-    • ChatGPT
-    • Claude
-    • Gemini
+• ChatGPT
+• Claude
+• Gemini
 
 How AI Helped 🧠
-    • Gemini helped with overall UI and feed design inspiration
-    • ChatGPT assisted with deployment and environment setup
-    • Suggested state management for like and save toggles
-    • Helped debug CORS and deployment issues
-    • Improved component structure and code readability
+• Helped with UI and feed design inspiration
+• Assisted with deployment and environment setup
+• Suggested state management for like/save toggles
+• Debugged CORS and frontend–backend connection issues
+• Improved component structure and readability
 
 Example Prompt 💬
-    Create a React Instagram-style feed with a grid of posts and a fullscreen post viewer with next/previous navigation.
-
-    My posts are not loading on Vercel and API requests are pending forever. Can you help debug frontend vs backend?
+“Create a React Instagram-style feed with a grid of posts and a fullscreen post viewer with next/previous navigation.”
 
 Example Correction 🛠️
+• Added fullscreen overlay for viewer
+• Locked background scroll
+• Refactored layout into viewer-media and viewer-sidebar
 
-Problem
-    PostViewer opened but:
-    • Images overlapped with the right sidebar
-    • Background feed was still scrollable
-    • Next / Previous buttons were inconsistent
-    • Viewer looked embedded instead of fullscreen
+<br><br>
 
-Correction Applied
-    • Added a full-screen overlay layer
-    • Locked background scroll when viewer opens
-    • Separated layout into:
-      – viewer-media (left – image)
-      – viewer-sidebar (right – author, caption, actions)
+VIII. Trade-offs & Next Improvements 🔮
 
-Ⅷ. Trade-offs & Next Improvements 🔮
+• Saved posts stored locally instead of backend
+• Authentication mocked using localStorage
+• Comments implemented only at UI level
+• Future: Saved Posts page
+• Future: Real user authentication and profiles
 
-    • Saved posts are stored locally instead of backend (intentional simplification)
-    • Authentication is mocked using localStorage
-    • Comments are UI-only (no backend yet)
-    • Future: Add Saved Posts page
-    • Future: Add real user authentication and profiles
+<br><br>
 
-Ⅸ. Sample Data 🧪
+IX. Sample Data 🧪
 
-    • Included via SQLite seed data
-    • Images loaded from static URLs
+• Included via SQLite seed data
+• Images loaded from static URLs
 
-Ⅹ. Demo Video 🎥
+<br><br>
 
-    https://drive.google.com/file/d/1Df1oazf72RH6_KPR6UJ5EZgXff9e69eM/view?usp=sharing
+X. Demo Video 🎥
+
+https://drive.google.com/file/d/1Df1oazf72RH6_KPR6UJ5EZgXff9e69eM/view
