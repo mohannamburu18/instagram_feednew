@@ -6,132 +6,101 @@ import './Feed.css';
 
 function Feed({ onEditClick }) {
   const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [pagination, setPagination] = useState({
-    currentPage: 1,
-    totalPages: 1,
-    totalPosts: 0,
-    hasNextPage: false,
-  });
-
-  // Current user
-  const [currentUser] = useState(() => {
-    const saved = localStorage.getItem('currentUser');
-    if (saved) return saved;
-    const user = `user_${Date.now()}`;
-    localStorage.setItem('currentUser', user);
-    return user;
-  });
-
-  // Viewer
   const [viewerOpen, setViewerOpen] = useState(false);
   const [viewerIndex, setViewerIndex] = useState(0);
 
-  const POSTS_PER_PAGE = 12;
+  const [likedPosts, setLikedPosts] = useState(
+    JSON.parse(localStorage.getItem('likedPosts')) || []
+  );
+  const [savedPosts, setSavedPosts] = useState(
+    JSON.parse(localStorage.getItem('savedPosts')) || []
+  );
 
+  /* FETCH POSTS */
   useEffect(() => {
-    fetchPosts(1);
+    api.get('/posts')
+      .then(res => setPosts(res.data.posts || []))
+      .catch(err => console.error(err));
   }, []);
 
-  const fetchPosts = async (page) => {
-    try {
-      setLoading(true);
-      const res = await api.get(
-        `/posts?page=${page}&limit=${POSTS_PER_PAGE}`
-      );
+  /* LOCK SCROLL WHEN VIEWER OPENS */
+  useEffect(() => {
+    document.body.style.overflow = viewerOpen ? 'hidden' : 'auto';
+  }, [viewerOpen]);
 
-      if (page === 1) {
-        setPosts(res.data.posts);
-      } else {
-        setPosts((prev) => [...prev, ...res.data.posts]);
-      }
+  useEffect(() => {
+    localStorage.setItem('likedPosts', JSON.stringify(likedPosts));
+  }, [likedPosts]);
 
-      setPagination(res.data.pagination);
-      setError(null);
-    } catch (err) {
-      console.error('Fetch posts error:', err);
-      setError('Failed to fetch posts');
-    } finally {
-      setLoading(false);
-    }
+  useEffect(() => {
+    localStorage.setItem('savedPosts', JSON.stringify(savedPosts));
+  }, [savedPosts]);
+
+  const handleLike = async (id) => {
+    const already = likedPosts.includes(id);
+    await api.post(`/posts/${id}/like`);
+
+    setPosts(p =>
+      p.map(post =>
+        post.id === id
+          ? { ...post, likes: already ? post.likes - 1 : post.likes + 1 }
+          : post
+      )
+    );
+
+    setLikedPosts(prev =>
+      already ? prev.filter(x => x !== id) : [...prev, id]
+    );
   };
 
-  const handleLike = async (postId) => {
-    try {
-      await api.post(`/posts/${postId}/like`);
-      setPosts((prev) =>
-        prev.map((p) =>
-          p.id === postId ? { ...p, likes: p.likes + 1 } : p
-        )
-      );
-    } catch (err) {
-      console.error('Like error:', err);
-    }
+  const handleSave = (id) => {
+    setSavedPosts(prev =>
+      prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]
+    );
   };
-
-  const handleDelete = async (postId) => {
-    if (!window.confirm('Delete this post?')) return;
-    try {
-      await api.delete(`/posts/${postId}`);
-      setPosts((prev) => prev.filter((p) => p.id !== postId));
-    } catch (err) {
-      console.error('Delete error:', err);
-    }
-  };
-
-  const loadMore = () => {
-    if (pagination.hasNextPage) {
-      fetchPosts(pagination.currentPage + 1);
-    }
-  };
-
-  if (loading && posts.length === 0) {
-    return <p className="loading-text">Loading posts...</p>;
-  }
 
   return (
     <div className="feed-container">
-      {error && (
-        <div className="error-container">
-          ⚠️ {error}
-          <button onClick={() => fetchPosts(1)}>Try Again</button>
-        </div>
-      )}
 
+      {/* STORIES */}
+      <div className="stories-section">
+        {['📷','T','F','F','A','M','N'].map((icon, i) => (
+          <div key={i} className="story-item">
+            <div className="story-ring active">
+              <div className="story-content">{icon}</div>
+            </div>
+            <span className="story-name">
+              {['Your Story','Travel','Food','Fitness','Art','Music','Nature'][i]}
+            </span>
+          </div>
+        ))}
+      </div>
+
+      {/* GRID */}
       <div className="explore-grid">
-        {posts.map((post, index) => (
+        {posts.map((post, i) => (
           <PostCard
             key={post.id}
             post={post}
-            onLike={handleLike}
-            onDelete={handleDelete}
-            onEdit={onEditClick}
-            currentUser={currentUser}
             onView={() => {
-              setViewerIndex(index);
+              setViewerIndex(i);
               setViewerOpen(true);
             }}
           />
         ))}
       </div>
 
-      {pagination.hasNextPage && (
-        <div className="load-more-container">
-          <button onClick={loadMore} disabled={loading}>
-            {loading ? 'Loading...' : 'Load More'}
-          </button>
-        </div>
-      )}
-
+      {/* FULLSCREEN VIEWER */}
       {viewerOpen && (
         <PostViewer
           posts={posts}
           initialIndex={viewerIndex}
           onClose={() => setViewerOpen(false)}
           onLike={handleLike}
-          onDelete={handleDelete}
-          currentUser={currentUser}
+          onSave={handleSave}
+          likedPosts={likedPosts}
+          savedPosts={savedPosts}
+          onEdit={onEditClick}
         />
       )}
     </div>
