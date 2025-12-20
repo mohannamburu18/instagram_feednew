@@ -12,13 +12,59 @@ function Feed({ onEditClick }) {
   const [likedPosts, setLikedPosts] = useState(
     JSON.parse(localStorage.getItem('likedPosts')) || []
   );
+
   const [savedPosts, setSavedPosts] = useState(
     JSON.parse(localStorage.getItem('savedPosts')) || []
   );
 
+  /* ---------------- FETCH POSTS ---------------- */
+
   useEffect(() => {
-    api.get('/posts').then(res => setPosts(res.data.posts));
+    api
+      .get('/posts')
+      .then((res) => {
+        setPosts(res.data.posts);
+      })
+      .catch(() => {
+        // ✅ Fallback data (for Vercel / no backend)
+        setPosts([
+          {
+            id: 1,
+            author: 'travel_explorer',
+            caption: 'Mountain vibes 🏔️',
+            image:
+              'https://images.unsplash.com/photo-1501785888041-af3ef285b470',
+            likes: 120,
+          },
+          {
+            id: 2,
+            author: 'foodie_dreams',
+            caption: 'Pasta is love 🍝',
+            image:
+              'https://images.unsplash.com/photo-1529042410759-befb1204b468',
+            likes: 89,
+          },
+          {
+            id: 3,
+            author: 'fitness_journey',
+            caption: 'Leg day 🔥',
+            image:
+              'https://images.unsplash.com/photo-1517964603305-7217c7f7f47e',
+            likes: 210,
+          },
+          {
+            id: 4,
+            author: 'urban_photographer',
+            caption: 'City lights 🌆',
+            image:
+              'https://images.unsplash.com/photo-1467269204594-9661b134dd2b',
+            likes: 156,
+          },
+        ]);
+      });
   }, []);
+
+  /* ---------------- PERSIST LIKE / SAVE ---------------- */
 
   useEffect(() => {
     localStorage.setItem('likedPosts', JSON.stringify(likedPosts));
@@ -28,32 +74,43 @@ function Feed({ onEditClick }) {
     localStorage.setItem('savedPosts', JSON.stringify(savedPosts));
   }, [savedPosts]);
 
-  const handleLike = async (id) => {
-    const already = likedPosts.includes(id);
-    await api.post(`/posts/${id}/like`);
+  /* ---------------- ACTIONS ---------------- */
 
-    setPosts(p =>
-      p.map(post =>
+  const handleLike = async (id) => {
+    const alreadyLiked = likedPosts.includes(id);
+
+    setPosts((prev) =>
+      prev.map((post) =>
         post.id === id
-          ? { ...post, likes: already ? post.likes - 1 : post.likes + 1 }
+          ? {
+              ...post,
+              likes: alreadyLiked ? post.likes - 1 : post.likes + 1,
+            }
           : post
       )
     );
 
-    setLikedPosts(prev =>
-      already ? prev.filter(x => x !== id) : [...prev, id]
+    setLikedPosts((prev) =>
+      alreadyLiked ? prev.filter((x) => x !== id) : [...prev, id]
     );
+
+    try {
+      await api.post(`/posts/${id}/like`);
+    } catch {
+      // ignore backend error in production
+    }
   };
 
   const handleSave = (id) => {
-    setSavedPosts(prev =>
-      prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]
+    setSavedPosts((prev) =>
+      prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]
     );
   };
 
+  /* ---------------- UI ---------------- */
+
   return (
     <div className="feed-container">
-
       {/* 🔵 STORIES BAR */}
       <div className="stories-section">
         {[
@@ -64,13 +121,11 @@ function Feed({ onEditClick }) {
           { id: 4, name: 'Art', icon: 'A' },
           { id: 5, name: 'Music', icon: 'M' },
           { id: 6, name: 'Nature', icon: 'N' },
-        ].map(story => (
+        ].map((story) => (
           <div key={story.id} className="story-item">
             <div className="story-avatar">
               <div className={`story-ring ${story.active ? 'active' : ''}`}>
-                <div className="story-content">
-                  {story.icon}
-                </div>
+                <div className="story-content">{story.icon}</div>
               </div>
             </div>
             <span className="story-name">{story.name}</span>
@@ -78,7 +133,7 @@ function Feed({ onEditClick }) {
         ))}
       </div>
 
-      {/* 🔥 EXPLORE GRID */}
+      {/* 🔥 POSTS GRID */}
       <div className="explore-grid">
         {posts.map((post, i) => (
           <PostCard
@@ -92,7 +147,7 @@ function Feed({ onEditClick }) {
         ))}
       </div>
 
-      {/* POST VIEWER */}
+      {/* 🖼 POST VIEWER */}
       {viewerOpen && (
         <PostViewer
           posts={posts}
