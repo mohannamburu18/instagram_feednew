@@ -92,12 +92,8 @@ http://localhost:5173
 
 <br><br>
 Ⅴ. API Endpoints 🔗
-Method	Endpoint	Description
-GET	/api/posts?page=1&limit=12	Get paginated posts
-POST	/api/posts/:id/like	Like a post
-POST	/api/posts	Create new post
-DELETE	/api/posts/:id	Delete post
-GET	/api/health	Health check
+<img width="688" height="223" alt="image" src="https://github.com/user-attachments/assets/52900abe-37ca-4ba2-89b6-628b4aa977d8" />
+
 
 <br><br>
 Ⅵ. Data Model 🗄️
