@@ -20,12 +20,13 @@ function Feed({ onEditClick }) {
   useEffect(() => {
     api.get('/posts')
       .then(res => setPosts(res.data.posts || []))
-      .catch(err => console.error(err));
+      .catch(console.error);
   }, []);
 
-  /* LOCK SCROLL WHEN VIEWER OPENS */
+  /* LOCK BACKGROUND SCROLL */
   useEffect(() => {
     document.body.style.overflow = viewerOpen ? 'hidden' : 'auto';
+    return () => (document.body.style.overflow = 'auto');
   }, [viewerOpen]);
 
   useEffect(() => {
@@ -35,29 +36,6 @@ function Feed({ onEditClick }) {
   useEffect(() => {
     localStorage.setItem('savedPosts', JSON.stringify(savedPosts));
   }, [savedPosts]);
-
-  const handleLike = async (id) => {
-    const already = likedPosts.includes(id);
-    await api.post(`/posts/${id}/like`);
-
-    setPosts(p =>
-      p.map(post =>
-        post.id === id
-          ? { ...post, likes: already ? post.likes - 1 : post.likes + 1 }
-          : post
-      )
-    );
-
-    setLikedPosts(prev =>
-      already ? prev.filter(x => x !== id) : [...prev, id]
-    );
-  };
-
-  const handleSave = (id) => {
-    setSavedPosts(prev =>
-      prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]
-    );
-  };
 
   return (
     <div className="feed-container">
@@ -96,8 +74,6 @@ function Feed({ onEditClick }) {
           posts={posts}
           initialIndex={viewerIndex}
           onClose={() => setViewerOpen(false)}
-          onLike={handleLike}
-          onSave={handleSave}
           likedPosts={likedPosts}
           savedPosts={savedPosts}
           onEdit={onEditClick}
