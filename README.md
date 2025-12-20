@@ -1,55 +1,91 @@
-Instagram Feed Clone 📸✨
+📸 Instagram Feed Clone
 
-Track Chosen + Why 🎯
+GitHub Repository:
+https://github.com/mohannamburu18/instagram_feednew
+
+Live Deployment:
+https://instagram-feednew-jc9l6pudq-mohans-projects-7ac7513d.vercel.app/
+
+<br><br>
+
+I. Track Chosen + Why 🎯
 
 Track C — Feed (Instagram-style consumption)
 
 I chose Track C to demonstrate an interactive, production-minded feed with pagination, modal post viewing, and social actions like like/save. This track best highlights frontend UX design, API integration, and state management working together smoothly.
 
-Features Implemented 🚀
+<br><br>
 
-Frontend (UI) 🎨
-• Instagram-style feed grid
-• Fullscreen post viewer modal (desktop + mobile)
-• Next / Previous post navigation
-• Like toggle with real-time count update ❤️
-• Save (bookmark) toggle using localStorage 🔖
-• Mobile swipe navigation (up / down)
-• Floating action buttons on mobile
-• Fully responsive design (desktop + mobile)
-• Loading and empty states
-• User-friendly error handling
+II. Features Implemented 🚀
+A. Frontend (UI) 🎨
 
-Backend (API) ⚙️
-• REST API built with Express
-• Fetch posts with pagination
-• Like a post
-• Create and delete posts
-• Input validation with clear error responses
+Instagram-style feed grid
 
-Persistence 💾
-• SQLite database for posts
-• localStorage for likes and saved posts
+Fullscreen post viewer modal (desktop + mobile)
 
-Tech Stack 🧩
+Next / Previous post navigation
 
+Like toggle with real-time count update ❤️
+
+Save (bookmark) toggle using localStorage 🔖
+
+Mobile swipe navigation (up / down)
+
+Floating action buttons on mobile
+
+Fully responsive design (desktop + mobile)
+
+Loading and empty states
+
+User-friendly error handling
+
+B. Backend (API) ⚙️
+
+REST API built with Express
+
+Fetch posts with pagination
+
+Like a post
+
+Create and delete posts
+
+Input validation with clear error responses
+
+C. Persistence 💾
+
+SQLite database for posts
+
+localStorage for likes and saved posts
+
+<br><br>
+
+III. Tech Stack 🧩
 Frontend
-• React (Vite)
-• Custom responsive CSS
-• Axios
+
+React (Vite)
+
+Custom responsive CSS
+
+Axios
 
 Backend
-• Node.js
-• Express.js
-• SQLite
+
+Node.js
+
+Express.js
+
+SQLite
 
 Deployment ☁️
-• Frontend: Vercel
-• Backend: Render
 
-How to Run the Project 🏃‍♂️
+Frontend: Vercel
 
-Backend (Server)
+Backend: Render
+
+<br><br>
+
+IV. How to Run the Project 🏃‍♂️
+A. Backend (Server)
 
 Open Command Prompt / Terminal:
 
@@ -62,7 +98,7 @@ npm start
 Backend runs at:
 http://localhost:5000
 
-Frontend (Client)
+B. Frontend (Client)
 
 Open another Command Prompt / Terminal:
 
@@ -75,36 +111,41 @@ npm run dev
 Frontend runs at:
 http://localhost:5173
 
-API Endpoints 🔗
+<br><br>
 
-Method | Endpoint | Description
-GET | /api/posts?page=1&limit=12 | Get paginated posts
-POST | /api/posts/:id/like | Like a post
-POST | /api/posts | Create a new post
-DELETE | /api/posts/:id | Delete a post
-GET | /api/health | Health check
+V. API Endpoints 🔗
+Method	Endpoint	Description
+GET	/api/posts?page=1&limit=12	Get paginated posts
+POST	/api/posts/:id/like	Like a post
+POST	/api/posts	Create a new post
+DELETE	/api/posts/:id	Delete a post
+GET	/api/health	Health check
 
-Data Model 🗄️
+<br><br>
 
-posts table
+VI. Data Model 🗄️
+posts Table
+Field	Type
+id	INTEGER (Primary Key)
+author	TEXT
+caption	TEXT
+image	TEXT
+likes	INTEGER
+creator_id	TEXT
+created_at	TIMESTAMP
 
-Field | Type
-id | INTEGER (Primary Key)
-author | TEXT
-caption | TEXT
-image | TEXT
-likes | INTEGER
-creator_id | TEXT
-created_at | TIMESTAMP
+<br><br>
 
-AI Collaboration Log 🤖
+VII. AI Collaboration Log 🤖
+A. AI Tools Used
 
-AI Tools Used
-• ChatGPT
-• Claude
-• Gemini
+ChatGPT
 
-How AI Helped 🧠
+Claude
+
+Gemini
+
+B. How AI Helped 🧠
 
 Gemini helped with overall UI and feed design inspiration
 
@@ -116,56 +157,83 @@ Helped debug CORS and frontend–backend connection issues
 
 Improved component structure and code readability
 
-Example Prompts 💬
+C. Example Prompts 💬
 
-Prompt 1
+Prompt 1:
+
 “Create a React Instagram-style feed with a grid of posts and a fullscreen post viewer with next/previous navigation.”
 
-Prompt 2
+Prompt 2:
+
 “My posts are not loading on Vercel, API request is pending forever. Can you help debug frontend vs backend?”
 
-Example Correction 🛠️
+D. Example Correction 🛠️
 
-Problem
-• Images overlapped with the right sidebar
-• Background feed was scrollable when viewer opened
-• Next / Previous buttons were inconsistent
-• Viewer was not truly fullscreen
+Problem Identified:
 
-Correction
-• Added a fullscreen overlay layer
-• Locked background scroll when viewer opens
-• Refactored layout into:
-– viewer-media (image section)
-– viewer-sidebar (author, caption, actions)
+Images overlapped with the right sidebar
 
-Trade-offs & Next Improvements 🔮
+Background feed was scrollable when viewer opened
 
+Next / Previous buttons were inconsistent
+
+Viewer was not truly fullscreen
+
+Correction Applied:
+
+Added a fullscreen overlay layer
+
+Locked background scroll when viewer opens
+
+Refactored layout into:
+
+viewer-media (image section)
+
+viewer-sidebar (author, caption, actions)
+
+<br><br>
+
+VIII. Trade-offs & Next Improvements 🔮
 Current Limitations
-• Saved posts stored locally instead of backend
-• Authentication mocked using localStorage
-• Comments implemented only at UI level
+
+Saved posts stored locally instead of backend
+
+Authentication mocked using localStorage
+
+Comments implemented only at UI level
 
 Future Enhancements
-• Saved Posts page
-• Real user authentication and profiles
-• Backend persistence for saved posts
-• Full comment system with backend integration
 
-Sample Data 🧪
+Saved Posts page
 
-• Included via SQLite seed data
-• Images loaded from static URLs
+Real user authentication and profiles
 
-Demo Video 🎥
+Backend persistence for saved posts
 
-View Demo Video
-https://drive.google.com/file/d/1Df1oazf72RH6_KPR6UJ5EZgXff9e69eM/view?usp=sharing
+Full comment system with backend integration
 
-License 📄
+<br><br>
+
+IX. Sample Data 🧪
+
+Included via SQLite seed data
+
+Images loaded from static URLs
+
+<br><br>
+
+X. Demo Video 🎥
+
+https://drive.google.com/file/d/1Df1oazf72RH6_KPR6UJ5EZgXff9e69eM/view
+
+<br><br>
+
+XI. License 📄
 
 This project is for educational purposes only.
 
-Contact 📬
+<br><br>
+
+XII. Contact 📬
 
 For questions or feedback, feel free to reach out through the project repository.
