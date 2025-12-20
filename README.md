@@ -92,6 +92,7 @@ http://localhost:5173
   
 
 <br><br>
+
 Ⅴ. API Endpoints 🔗
 <img width="688" height="223" alt="image" src="https://github.com/user-attachments/assets/52900abe-37ca-4ba2-89b6-628b4aa977d8" />
 
