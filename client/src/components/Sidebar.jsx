@@ -1,57 +1,37 @@
-import { useState } from 'react';
 import './Sidebar.css';
 
-function Sidebar({ currentView, onNavigate, currentUser }) {
-  const [showCreateMenu, setShowCreateMenu] = useState(false);
-
-  const menuItems = [
-    { id: 'home', icon: '🏠', label: 'Home', view: 'feed' },
-    { id: 'search', icon: '🔍', label: 'Search', view: 'search' },
-    { id: 'explore', icon: '🧭', label: 'Explore', view: 'feed' },
-    { id: 'reels', icon: '🎬', label: 'Reels', view: 'reels' },
-    { id: 'messages', icon: '💬', label: 'Messages', view: 'messages' },
-    { id: 'notifications', icon: '🔔', label: 'Notifications', view: 'notifications', badge: 0 },
-    { id: 'create', icon: '➕', label: 'Create', action: 'create' },
-    { id: 'profile', icon: '👤', label: 'Profile', view: 'profile' },
+function Sidebar({ currentView, onNavigate }) {
+  const items = [
+    { id: 'feed', icon: '🏠', label: 'Home' },
+    { id: 'search', icon: '🔍', label: 'Search' },
+    { id: 'feed', icon: '🧭', label: 'Explore' },
+    { id: 'reels', icon: '🎬', label: 'Reels' },
+    { id: 'messages', icon: '💬', label: 'Messages' },
+    { id: 'notifications', icon: '🔔', label: 'Notifications' },
+    { id: 'create', icon: '➕', label: 'Create' },
+    { id: 'profile', icon: '👤', label: 'Profile' }
   ];
 
-  const handleItemClick = (item) => {
-    if (item.action === 'create') {
-      onNavigate('create');
-    } else if (item.view) {
-      onNavigate(item.view);
-    }
-  };
-
   return (
-    <div className="sidebar">
-      <div className="sidebar-header">
-        <h1 className="sidebar-logo">InstagramFeed</h1>
-      </div>
+    <aside className="sidebar">
+      <h1 className="sidebar-logo">InstagramFeed</h1>
 
-      <nav className="sidebar-nav">
-        {menuItems.map((item) => (
-          <button
-            key={item.id}
-            className={`sidebar-item ${currentView === item.view ? 'active' : ''}`}
-            onClick={() => handleItemClick(item)}
-          >
-            <span className="sidebar-icon">{item.icon}</span>
-            <span className="sidebar-label">{item.label}</span>
-            {item.badge !== undefined && item.badge > 0 && (
-              <span className="sidebar-badge">{item.badge}</span>
-            )}
-          </button>
-        ))}
-      </nav>
-
-      <div className="sidebar-footer">
-        <button className="sidebar-item">
-          <span className="sidebar-icon">☰</span>
-          <span className="sidebar-label">More</span>
+      {items.map((item, i) => (
+        <button
+          key={i}
+          className={`sidebar-item ${currentView === item.id ? 'active' : ''}`}
+          onClick={() => onNavigate(item.id)}
+        >
+          <span>{item.icon}</span>
+          <span className="label">{item.label}</span>
         </button>
-      </div>
-    </div>
+      ))}
+
+      <button className="sidebar-item">
+        <span>☰</span>
+        <span className="label">More</span>
+      </button>
+    </aside>
   );
 }
 
