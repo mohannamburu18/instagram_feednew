@@ -15,75 +15,36 @@ function App() {
   const [currentView, setCurrentView] = useState('feed');
   const [editingPost, setEditingPost] = useState(null);
 
-  // Get current user from localStorage
   const currentUser = localStorage.getItem('currentUser') || 'guest';
-
-  const handleCreateSuccess = () => {
-    setCurrentView('feed');
-  };
 
   const handleEditClick = (post) => {
     setEditingPost(post);
     setCurrentView('edit');
   };
 
-  const handleEditSuccess = () => {
-    setEditingPost(null);
-    setCurrentView('feed');
-  };
-
-  const handleEditCancel = () => {
-    setEditingPost(null);
-    setCurrentView('feed');
-  };
-
-  const handleNavigation = (view) => {
-    setCurrentView(view);
-    setEditingPost(null);
-  };
-
   return (
     <div className="app">
-      {/* Left Sidebar */}
-      <Sidebar 
-        currentView={currentView} 
-        onNavigate={handleNavigation}
+      <Sidebar
+        currentView={currentView}
+        onNavigate={setCurrentView}
         currentUser={currentUser}
       />
 
-      {/* Main Content */}
       <main className="app-main">
-        {currentView === 'feed' && (
-          <Feed onEditClick={handleEditClick} />
-        )}
-        {currentView === 'create' && (
-          <CreatePost onSuccess={handleCreateSuccess} onCancel={() => setCurrentView('feed')} />
-        )}
+        {currentView === 'feed' && <Feed onEditClick={handleEditClick} />}
+        {currentView === 'create' && <CreatePost onSuccess={() => setCurrentView('feed')} />}
         {currentView === 'edit' && editingPost && (
-          <EditPost 
-            post={editingPost} 
-            onSuccess={handleEditSuccess}
-            onCancel={handleEditCancel}
-          />
+          <EditPost post={editingPost} onSuccess={() => setCurrentView('feed')} />
         )}
-        {currentView === 'search' && (
-          <Search />
-        )}
-        {currentView === 'reels' && (
-          <Reels />
-        )}
-        {currentView === 'messages' && (
-          <Messages />
-        )}
-        {currentView === 'notifications' && (
-          <Notifications />
-        )}
+        {currentView === 'search' && <Search />}
+        {currentView === 'reels' && <Reels />}
+        {currentView === 'messages' && <Messages />}
+        {currentView === 'notifications' && <Notifications />}
         {currentView === 'profile' && (
           <Profile currentUser={currentUser} onEditClick={handleEditClick} />
         )}
       </main>
 
-      {/* Right Sidebar - Hide for certain views */}
       {!['messages', 'reels'].includes(currentView) && (
         <RightSidebar currentUser={currentUser} />
       )}
