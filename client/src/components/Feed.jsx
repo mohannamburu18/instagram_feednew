@@ -8,12 +8,21 @@ function Feed({ onEditClick }) {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
   const [pagination, setPagination] = useState({
     currentPage: 1,
     totalPages: 1,
     totalPosts: 0,
     hasNextPage: false,
   });
+
+  // Viewer state
+  const [viewerOpen, setViewerOpen] = useState(false);
+  const [viewerIndex, setViewerIndex] = useState(0);
+
+  // Like / Save state (local)
+  const [likedPosts, setLikedPosts] = useState([]);
+  const [savedPosts, setSavedPosts] = useState([]);
 
   // Current user
   const [currentUser] = useState(() => {
@@ -24,10 +33,6 @@ function Feed({ onEditClick }) {
     return user;
   });
 
-  // Viewer
-  const [viewerOpen, setViewerOpen] = useState(false);
-  const [viewerIndex, setViewerIndex] = useState(0);
-
   const POSTS_PER_PAGE = 12;
 
   useEffect(() => {
@@ -37,9 +42,7 @@ function Feed({ onEditClick }) {
   const fetchPosts = async (page) => {
     try {
       setLoading(true);
-      const res = await api.get(
-        `/posts?page=${page}&limit=${POSTS_PER_PAGE}`
-      );
+      const res = await api.get(`/posts?page=${page}&limit=${POSTS_PER_PAGE}`);
 
       if (page === 1) {
         setPosts(res.data.posts);
@@ -50,7 +53,7 @@ function Feed({ onEditClick }) {
       setPagination(res.data.pagination);
       setError(null);
     } catch (err) {
-      console.error('Fetch posts error:', err);
+      console.error(err);
       setError('Failed to fetch posts');
     } finally {
       setLoading(false);
@@ -65,9 +68,22 @@ function Feed({ onEditClick }) {
           p.id === postId ? { ...p, likes: p.likes + 1 } : p
         )
       );
+      setLikedPosts((prev) =>
+        prev.includes(postId)
+          ? prev.filter((id) => id !== postId)
+          : [...prev, postId]
+      );
     } catch (err) {
       console.error('Like error:', err);
     }
+  };
+
+  const handleSave = (postId) => {
+    setSavedPosts((prev) =>
+      prev.includes(postId)
+        ? prev.filter((id) => id !== postId)
+        : [...prev, postId]
+    );
   };
 
   const handleDelete = async (postId) => {
@@ -75,6 +91,7 @@ function Feed({ onEditClick }) {
     try {
       await api.delete(`/posts/${postId}`);
       setPosts((prev) => prev.filter((p) => p.id !== postId));
+      setViewerOpen(false);
     } catch (err) {
       console.error('Delete error:', err);
     }
@@ -104,10 +121,10 @@ function Feed({ onEditClick }) {
           <PostCard
             key={post.id}
             post={post}
+            currentUser={currentUser}
             onLike={handleLike}
             onDelete={handleDelete}
             onEdit={onEditClick}
-            currentUser={currentUser}
             onView={() => {
               setViewerIndex(index);
               setViewerOpen(true);
@@ -129,9 +146,13 @@ function Feed({ onEditClick }) {
           posts={posts}
           initialIndex={viewerIndex}
           onClose={() => setViewerOpen(false)}
-          onLike={handleLike}
-          onDelete={handleDelete}
           currentUser={currentUser}
+          onLike={handleLike}
+          onSave={handleSave}
+          onDelete={handleDelete}
+          likedPosts={likedPosts}
+          savedPosts={savedPosts}
+          onEdit={onEditClick}
         />
       )}
     </div>
