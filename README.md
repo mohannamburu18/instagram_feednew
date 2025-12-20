@@ -16,7 +16,7 @@ Track C — Feed (Instagram-style consumption)
 
 Ⅱ. Features Implemented 🚀
 
-Frontend (UI) 🎨
+Frontend (UI) 🎨<br>
     1. Instagram-style feed grid
     <br>
     2. Post viewer modal (desktop and mobile)<br>
@@ -29,34 +29,34 @@ Frontend (UI) 🎨
     9. Empty state and loading state<br>
     10. Error handling UI<br>
 
-Backend (API) ⚙️
-    1. REST API using Express
-    2. Get posts with pagination
-    3. Like a post
-    4. Create and delete posts
-    5. Validation with clear error responses
+Backend (API) ⚙️<br>
+    1. REST API using Express<br>
+    2. Get posts with pagination<br>
+    3. Like a post<br>
+    4. Create and delete posts<br>
+    5. Validation with clear error responses<br>
 
-Persistence 💾
-    1. SQLite database for posts
-    2 .localStorage for likes and saved posts
+Persistence 💾<br>
+    1. SQLite database for posts<br>
+    2 .localStorage for likes and saved posts<br>
     
 
 <br><br>
 Ⅲ. Tech Stack 🧩
 
-Frontend
-    1. React (Vite)
-    2. CSS (custom, responsive)
-    3. Axios
+Frontend<br>
+    1. React (Vite)<br>
+    2. CSS (custom, responsive)<br>
+    3. Axios<br>
 
 Backend
-    1. Node.js
-    2. Express.js
-    3. SQLite
+    1. Node.js<br>
+    2. Express.js<br>
+    3. SQLite<br>
 
-Deployment ☁️
-    1. Frontend: Vercel
-    2. Backend: Render
+Deployment ☁️<br>
+    1. Frontend: Vercel<br>
+    2. Backend: Render<br>
     
 
 <br><br>
