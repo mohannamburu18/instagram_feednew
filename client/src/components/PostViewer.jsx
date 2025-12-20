@@ -20,6 +20,11 @@ function PostViewer({
   const touchStartY = useRef(0);
   const touchEndY = useRef(0);
 
+  // ✅ keep index in sync when opening new post
+  useEffect(() => {
+    setCurrentIndex(initialIndex);
+  }, [initialIndex]);
+
   const currentPost = posts[currentIndex];
   if (!currentPost) return null;
 
@@ -46,7 +51,7 @@ function PostViewer({
     }
   };
 
-  // Desktop keyboard
+  /* Keyboard navigation (desktop) */
   useEffect(() => {
     const onKey = (e) => {
       if (e.key === 'Escape') onClose();
@@ -57,13 +62,15 @@ function PostViewer({
     return () => window.removeEventListener('keydown', onKey);
   }, [currentIndex]);
 
-  // Mobile swipe
+  /* Touch swipe (mobile) */
   const handleTouchStart = (e) => {
     touchStartY.current = e.touches[0].clientY;
   };
+
   const handleTouchMove = (e) => {
     touchEndY.current = e.touches[0].clientY;
   };
+
   const handleTouchEnd = () => {
     const diff = touchStartY.current - touchEndY.current;
     if (diff > 50) handleNext();
@@ -78,8 +85,10 @@ function PostViewer({
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
     >
+      {/* Close */}
       <button className="viewer-close-btn" onClick={onClose}>✕</button>
 
+      {/* Desktop navigation */}
       {currentIndex > 0 && (
         <button className="viewer-nav-btn prev" onClick={handlePrevious}>‹</button>
       )}
@@ -88,39 +97,95 @@ function PostViewer({
       )}
 
       <div className="viewer-content">
+        {/* MEDIA */}
         <div className="viewer-media">
           {isVideo ? (
-            <video src={currentPost.image} className="viewer-video" controls />
+            <video
+              src={currentPost.image}
+              className="viewer-video"
+              controls
+            />
           ) : (
-            <img src={currentPost.image} alt={currentPost.caption} className="viewer-image" />
+            <img
+              src={currentPost.image}
+              alt={currentPost.caption}
+              className="viewer-image"
+            />
           )}
         </div>
 
+        {/* SIDEBAR */}
         <div className="viewer-sidebar">
+          {/* TOP */}
           <div className="viewer-top">
             <div className="viewer-header">
               <div className="viewer-author">
                 <div className="viewer-avatar">
                   {currentPost.author.charAt(0).toUpperCase()}
                 </div>
-                <div>
-                  <div className="viewer-author-name">{currentPost.author}</div>
-                  <div className="viewer-post-time">5h ago</div>
+                <div className="viewer-author-info">
+                  <span className="viewer-author-name">
+                    {currentPost.author}
+                  </span>
+                  <span className="viewer-post-time">5h ago</span>
                 </div>
               </div>
 
               {isOwner && (
                 <div className="viewer-menu">
-                  <button className="viewer-menu-btn" onClick={() => setShowMenu(!showMenu)}>⋮</button>
+                  <button
+                    className="viewer-menu-btn"
+                    onClick={() => setShowMenu(!showMenu)}
+                  >
+                    ⋮
+                  </button>
                   {showMenu && (
                     <div className="viewer-dropdown">
-                      <button onClick={() => { onEdit(currentPost); onClose(); }}>✏️ Edit</button>
-                      <button className="delete" onClick={() => { onDelete(currentPost.id); onClose(); }}>🗑️ Delete</button>
+                      <button onClick={() => { onEdit(currentPost); onClose(); }}>
+                        ✏️ Edit
+                      </button>
+                      <button
+                        className="delete"
+                        onClick={() => { onDelete(currentPost.id); onClose(); }}
+                      >
+                        🗑️ Delete
+                      </button>
                     </div>
                   )}
                 </div>
               )}
             </div>
 
-            <div className="viewer-caption">{currentPost.caption}</div>
+            <div className="viewer-caption">
+              {currentPost.caption}
+            </div>
           </div>
+
+          {/* BOTTOM (desktop) */}
+          <div className="viewer-bottom">
+            <div className="viewer-actions">
+              <button onClick={() => onLike(currentPost.id)}>
+                {isLiked ? '❤️' : '🤍'} {Math.max(0, currentPost.likes)}
+              </button>
+              <button onClick={() => onSave(currentPost.id)}>
+                {isSaved ? '🔖' : '🏷️'}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* MOBILE FLOATING ACTIONS */}
+      <div className="mobile-actions">
+        <button onClick={(e) => { e.stopPropagation(); onLike(currentPost.id); }}>
+          {isLiked ? '❤️' : '🤍'}
+        </button>
+        <button onClick={(e) => { e.stopPropagation(); onSave(currentPost.id); }}>
+          {isSaved ? '🔖' : '🏷️'}
+        </button>
+      </div>
+    </div>
+  );
+}
+
+export default PostViewer;
