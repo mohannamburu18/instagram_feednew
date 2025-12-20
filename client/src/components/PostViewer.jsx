@@ -14,11 +14,11 @@ function PostViewer({
   savedPosts = [],
 }) {
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
-  const [isPlaying, setIsPlaying] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
 
-  const videoRef = useRef(null);
   const viewerRef = useRef(null);
+  const touchStartY = useRef(0);
+  const touchEndY = useRef(0);
 
   const currentPost = posts[currentIndex];
   if (!currentPost) return null;
@@ -34,18 +34,17 @@ function PostViewer({
 
   const handleNext = () => {
     if (currentIndex < posts.length - 1) {
-      setCurrentIndex((i) => i + 1);
-      setIsPlaying(false);
+      setCurrentIndex(i => i + 1);
     }
   };
 
   const handlePrevious = () => {
     if (currentIndex > 0) {
-      setCurrentIndex((i) => i - 1);
-      setIsPlaying(false);
+      setCurrentIndex(i => i - 1);
     }
   };
 
+  /* Keyboard navigation (desktop) */
   useEffect(() => {
     const onKey = (e) => {
       if (e.key === 'Escape') onClose();
@@ -56,10 +55,32 @@ function PostViewer({
     return () => window.removeEventListener('keydown', onKey);
   }, [currentIndex]);
 
+  /* Touch swipe (mobile) */
+  const handleTouchStart = (e) => {
+    touchStartY.current = e.touches[0].clientY;
+  };
+
+  const handleTouchMove = (e) => {
+    touchEndY.current = e.touches[0].clientY;
+  };
+
+  const handleTouchEnd = () => {
+    const diff = touchStartY.current - touchEndY.current;
+    if (diff > 50) handleNext();
+    if (diff < -50) handlePrevious();
+  };
+
   return (
-    <div className="post-viewer-overlay" ref={viewerRef}>
+    <div
+      className="post-viewer-overlay"
+      ref={viewerRef}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+    >
       <button className="viewer-close-btn" onClick={onClose}>✕</button>
 
+      {/* Desktop arrows */}
       {currentIndex > 0 && (
         <button className="viewer-nav-btn prev" onClick={handlePrevious}>‹</button>
       )}
@@ -72,7 +93,6 @@ function PostViewer({
         <div className="viewer-media">
           {isVideo ? (
             <video
-              ref={videoRef}
               src={currentPost.image}
               className="viewer-video"
               controls
@@ -96,9 +116,7 @@ function PostViewer({
                   {currentPost.author.charAt(0).toUpperCase()}
                 </div>
                 <div className="viewer-author-info">
-                  <span className="viewer-author-name">
-                    {currentPost.author}
-                  </span>
+                  <span className="viewer-author-name">{currentPost.author}</span>
                   <span className="viewer-post-time">5h ago</span>
                 </div>
               </div>
@@ -133,7 +151,7 @@ function PostViewer({
             </div>
           </div>
 
-          {/* BOTTOM */}
+          {/* BOTTOM (desktop) */}
           <div className="viewer-bottom">
             <div className="viewer-actions">
               <button onClick={() => onLike(currentPost.id)}>
@@ -145,6 +163,16 @@ function PostViewer({
             </div>
           </div>
         </div>
+      </div>
+
+      {/* MOBILE FLOATING ACTIONS */}
+      <div className="mobile-actions">
+        <button onClick={() => onLike(currentPost.id)}>
+          {isLiked ? '❤️' : '🤍'}
+        </button>
+        <button onClick={() => onSave(currentPost.id)}>
+          {isSaved ? '🔖' : '🏷️'}
+        </button>
       </div>
     </div>
   );
