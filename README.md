@@ -1,7 +1,7 @@
 📸 Instagram Feed Clone<br>
 
-GitHub Repository:
-https://github.com/mohannamburu18/instagram_feednew
+GitHub Repository:<br>
+https://github.com/mohannamburu18/instagram_feednew<br>
 
 Deployment Link:
 https://instagram-feednew-jc9l6pudq-mohans-projects-7ac7513d.vercel.app/
@@ -105,15 +105,15 @@ posts table
 <img width="391" height="286" alt="image" src="https://github.com/user-attachments/assets/19b55b87-1b31-4d89-9360-f856070b3718" />
 
 <br><br>
-Ⅶ. AI Collaboration Log 🤖
+Ⅶ. AI Collaboration Log 🤖<br>
 
 
-AI Tools Used
-    1. ChatGPT
-    2.  Claude
-    3 . Gemini
+AI Tools Used<br>
+    1. ChatGPT<br>
+    2.  Claude<br>
+    3 . Gemini<br>
 
-How AI Helped 🧠
+How AI Helped 🧠<br>
     1. Gemini helped with overall UI and feed design inspiration<br>
     2. ChatGPT assisted with deployment and environment setup<br>
     3. Suggested state management for like and save toggles<br>
