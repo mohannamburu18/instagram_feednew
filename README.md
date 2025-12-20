@@ -1,130 +1,171 @@
-1. Track Chosen + Why (2–3 lines)
+Instagram Feed Clone 📸✨
+
+Track Chosen + Why 🎯
+
 Track C — Feed (Instagram-style consumption)
-I chose Track C to demonstrate an interactive feed with pagination, modal post viewing, and social actions like like/save. This track best showcases frontend UX, API integration, and state management in a production-minded way.
 
-2. Features Implemented (Checklist)
-Frontend (UI)
-•	Instagram-style feed grid
-•	Post viewer modal (desktop + mobile)
-•	Next / Previous post navigation
-•	Like toggle (with count update)
-•	Save (bookmark) toggle using localStorage
-•	Mobile swipe navigation (up/down)
-•	Floating actions on mobile (like/save)
-•	Responsive design (desktop + mobile)
-•	Empty state + loading state
-•	Error handling UI
+I chose Track C to demonstrate an interactive, production-minded feed with pagination, modal post viewing, and social actions like like/save. This track best highlights frontend UX design, API integration, and state management working together smoothly.
 
-Backend (API)
-•	REST API using Express
-•	Get posts (pagination)
-•	Like a post
-•	Create / Delete post
-•	Validation + error responses
-Persistence
-•	SQLite database for posts
-•	localStorage for likes & saved posts
+Features Implemented 🚀
 
-3. Tech Stack
+Frontend (UI) 🎨
+• Instagram-style feed grid
+• Fullscreen post viewer modal (desktop + mobile)
+• Next / Previous post navigation
+• Like toggle with real-time count update ❤️
+• Save (bookmark) toggle using localStorage 🔖
+• Mobile swipe navigation (up / down)
+• Floating action buttons on mobile
+• Fully responsive design (desktop + mobile)
+• Loading and empty states
+• User-friendly error handling
+
+Backend (API) ⚙️
+• REST API built with Express
+• Fetch posts with pagination
+• Like a post
+• Create and delete posts
+• Input validation with clear error responses
+
+Persistence 💾
+• SQLite database for posts
+• localStorage for likes and saved posts
+
+Tech Stack 🧩
+
 Frontend
-•	React (Vite)
-•	CSS (custom, responsive)
-•	Axios
+• React (Vite)
+• Custom responsive CSS
+• Axios
+
 Backend
-•	Node.js
-•	Express.js
-•	SQLite
-Deployment
-•	Frontend: Vercel
-•	Backend: Render
+• Node.js
+• Express.js
+• SQLite
 
+Deployment ☁️
+• Frontend: Vercel
+• Backend: Render
 
-4. How to run:
-1.	Clone the repository from GitHub using
-git clone https://github.com/mohannamburu18/instagram_feednew.git
-2.	Move into the project directory
+How to Run the Project 🏃‍♂️
+
+Backend (Server)
+
+Open Command Prompt / Terminal:
+
 cd instagram_feednew
-3.	Navigate to the backend folder
 cd server
-4.	Install backend dependencies
 npm install
-5.	Create a .env file inside the server folder and add PORT=5000
-6.	Start the backend server
-npm run dev or npm start
-7.	Open a new terminal window
-8.	Navigate to the frontend folder
+npm start
+
+
+Backend runs at:
+http://localhost:5000
+
+Frontend (Client)
+
+Open another Command Prompt / Terminal:
+
+cd instagram_feednew
 cd client
-9.	Install frontend dependencies
 npm install
-10.	Create a .env file inside the client folder and add VITE_API_URL=http://localhost:5000/api
-11.	Restart the frontend server
 npm run dev
-12.	Open the application in the browser at http://localhost:5173
 
-5.API Endpoints
-Method	Endpoint	Description
-GET	/api/posts?page=1&limit=12	Get paginated posts
-POST	/api/posts/:id/like	Like a post
-POST	/api/posts	Create new post
-DELETE	/api/posts/:id	Delete post
-GET	/api/health	Health check
 
-6. Data Model (Tables / Fields)
+Frontend runs at:
+http://localhost:5173
+
+API Endpoints 🔗
+
+Method | Endpoint | Description
+GET | /api/posts?page=1&limit=12 | Get paginated posts
+POST | /api/posts/:id/like | Like a post
+POST | /api/posts | Create a new post
+DELETE | /api/posts/:id | Delete a post
+GET | /api/health | Health check
+
+Data Model 🗄️
+
 posts table
-Field	Type
-id	INTEGER (PK)
-author	TEXT
-caption	TEXT
-image	TEXT
-likes	INTEGER
-creator_id	TEXT
-created_at	TIMESTAMP
 
+Field | Type
+id | INTEGER (Primary Key)
+author | TEXT
+caption | TEXT
+image | TEXT
+likes | INTEGER
+creator_id | TEXT
+created_at | TIMESTAMP
 
-7. AI Collaboration Log
+AI Collaboration Log 🤖
+
 AI Tools Used
-•	ChatGPT
-•	Claude
-•	Gemini
+• ChatGPT
+• Claude
+• Gemini
 
-How AI Helped (3–5 bullets)
-1.	Gemini helped getting images of  overall design
-2.	Chatgpt helped in deployement
-3.	Suggested state management for like/save toggle
-4.	Helped debug CORS and deployment issues
-5.	Improved component structure and readability
-Example Prompt
-Create a React Instagram-style feed with a grid of posts and a fullscreen post viewer with next/previous navigation.
-My posts are not loading on Vercel, API request is pending forever. Can you help debug frontend vs backend?”
+How AI Helped 🧠
 
+Gemini helped with overall UI and feed design inspiration
 
-Example Correction
+ChatGPT assisted with deployment and environment setup
+
+Suggested state management patterns for like/save toggles
+
+Helped debug CORS and frontend–backend connection issues
+
+Improved component structure and code readability
+
+Example Prompts 💬
+
+Prompt 1
+“Create a React Instagram-style feed with a grid of posts and a fullscreen post viewer with next/previous navigation.”
+
+Prompt 2
+“My posts are not loading on Vercel, API request is pending forever. Can you help debug frontend vs backend?”
+
+Example Correction 🛠️
+
 Problem
-•	PostViewer opened but:
-o	Images overlapped with right sidebar
-o	Background feed was still scrollable
-o	Next/Previous buttons were inconsistent
-o	Viewer looked embedded, not truly fullscreen
-Your correction
-•	Added a full-screen overlay layer
-•	Locked background scroll when viewer opens
-•	Separated layout into:
-o	viewer-media (left → image)
-o	viewer-sidebar (right → author, caption, actions)
- 
+• Images overlapped with the right sidebar
+• Background feed was scrollable when viewer opened
+• Next / Previous buttons were inconsistent
+• Viewer was not truly fullscreen
 
-8. Trade-offs & Next Improvements (3–5 bullets)
-	Saved posts are stored locally instead of backend (intentional simplification)
-	Authentication is mocked using localStorage
-	Comments are UI-only (no backend yet)
-	Future: add Saved Posts page
-	Future: add real user auth and profiles
+Correction
+• Added a fullscreen overlay layer
+• Locked background scroll when viewer opens
+• Refactored layout into:
+– viewer-media (image section)
+– viewer-sidebar (author, caption, actions)
 
+Trade-offs & Next Improvements 🔮
 
-9. Sample Data
-•	Included via SQLite seed data
-•	Images loaded from static URLs
+Current Limitations
+• Saved posts stored locally instead of backend
+• Authentication mocked using localStorage
+• Comments implemented only at UI level
 
-10. Demo Video 
+Future Enhancements
+• Saved Posts page
+• Real user authentication and profiles
+• Backend persistence for saved posts
+• Full comment system with backend integration
+
+Sample Data 🧪
+
+• Included via SQLite seed data
+• Images loaded from static URLs
+
+Demo Video 🎥
+
+View Demo Video
 https://drive.google.com/file/d/1Df1oazf72RH6_KPR6UJ5EZgXff9e69eM/view?usp=sharing
 
+License 📄
+
+This project is for educational purposes only.
+
+Contact 📬
+
+For questions or feedback, feel free to reach out through the project repository.
