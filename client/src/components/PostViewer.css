@@ -21,7 +21,6 @@
   border: none;
   color: #fff;
   font-size: 22px;
-  cursor: pointer;
 }
 
 /* Navigation */
@@ -36,7 +35,6 @@
   border: none;
   color: #fff;
   font-size: 30px;
-  cursor: pointer;
 }
 
 .viewer-nav-btn.prev { left: 20px; }
@@ -73,14 +71,14 @@
   width: 400px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between; /* ⭐ IMPORTANT */
+  justify-content: space-between;
   background: rgba(255,255,255,0.05);
   backdrop-filter: blur(20px);
   border-radius: 12px;
   border: 1px solid rgba(255,255,255,0.1);
 }
 
-/* Top section */
+/* Top */
 .viewer-top {
   padding: 20px;
   display: flex;
@@ -112,52 +110,13 @@
   justify-content: center;
 }
 
-.viewer-author-name {
-  color: #fff;
-  font-weight: 600;
-}
-
-.viewer-post-time {
-  font-size: 12px;
-  color: rgba(255,255,255,0.6);
-}
+.viewer-author-name { color: #fff; font-weight: 600; }
+.viewer-post-time { font-size: 12px; color: rgba(255,255,255,0.6); }
 
 .viewer-caption {
   color: #fff;
   font-size: 15px;
   line-height: 1.6;
-}
-
-/* Menu */
-.viewer-menu-btn {
-  background: none;
-  border: none;
-  color: #fff;
-  font-size: 22px;
-  cursor: pointer;
-}
-
-.viewer-dropdown {
-  position: absolute;
-  right: 0;
-  top: 40px;
-  background: rgba(30,30,30,0.95);
-  border-radius: 8px;
-  padding: 8px;
-}
-
-.viewer-dropdown button {
-  background: none;
-  border: none;
-  color: #fff;
-  padding: 8px 12px;
-  width: 100%;
-  text-align: left;
-  cursor: pointer;
-}
-
-.viewer-dropdown button.delete {
-  color: #ff6b7a;
 }
 
 /* Bottom */
@@ -171,15 +130,11 @@
   gap: 20px;
 }
 
-.viewer-actions button {
-  background: none;
-  border: none;
-  color: #fff;
-  font-size: 16px;
-  cursor: pointer;
+/* MOBILE FLOATING ACTIONS */
+.mobile-actions {
+  display: none;
 }
 
-/* Mobile */
 @media (max-width: 900px) {
   .viewer-content {
     flex-direction: column;
@@ -192,5 +147,25 @@
 
   .viewer-nav-btn {
     display: none;
+  }
+
+  .mobile-actions {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    z-index: 10002;
+  }
+
+  .mobile-actions button {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.6);
+    border: none;
+    color: #fff;
+    font-size: 22px;
   }
 }
