@@ -12,25 +12,20 @@ function Feed({ onEditClick }) {
   const [likedPosts, setLikedPosts] = useState(
     JSON.parse(localStorage.getItem('likedPosts')) || []
   );
+
   const [savedPosts, setSavedPosts] = useState(
     JSON.parse(localStorage.getItem('savedPosts')) || []
   );
 
   /* ================= FETCH POSTS ================= */
-  const fetchPosts = async () => {
-    try {
-      const res = await api.get('/posts');
-      setPosts(res.data.posts || []);
-    } catch (err) {
-      console.error('Fetch posts failed:', err);
-    }
-  };
-
   useEffect(() => {
-    fetchPosts();
+    api
+      .get('/posts')
+      .then((res) => setPosts(res.data.posts || []))
+      .catch((err) => console.error('Fetch posts error:', err));
   }, []);
 
-  /* ================= SCROLL LOCK ================= */
+  /* ================= LOCK BACKGROUND SCROLL ================= */
   useEffect(() => {
     document.body.style.overflow = viewerOpen ? 'hidden' : 'auto';
     return () => {
@@ -38,7 +33,7 @@ function Feed({ onEditClick }) {
     };
   }, [viewerOpen]);
 
-  /* ================= LIKE ================= */
+  /* ================= LIKE HANDLER ================= */
   const handleLike = async (id) => {
     const alreadyLiked = likedPosts.includes(id);
 
@@ -46,10 +41,13 @@ function Feed({ onEditClick }) {
       await api.post(`/posts/${id}/like`);
 
       setPosts((prev) =>
-        prev.map((p) =>
-          p.id === id
-            ? { ...p, likes: alreadyLiked ? p.likes - 1 : p.likes + 1 }
-            : p
+        prev.map((post) =>
+          post.id === id
+            ? {
+                ...post,
+                likes: alreadyLiked ? post.likes - 1 : post.likes + 1,
+              }
+            : post
         )
       );
 
@@ -57,17 +55,18 @@ function Feed({ onEditClick }) {
         alreadyLiked ? prev.filter((x) => x !== id) : [...prev, id]
       );
     } catch (err) {
-      console.error(err);
+      console.error('Like error:', err);
     }
   };
 
-  /* ================= SAVE ================= */
+  /* ================= SAVE HANDLER ================= */
   const handleSave = (id) => {
     setSavedPosts((prev) =>
       prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]
     );
   };
 
+  /* ================= LOCAL STORAGE ================= */
   useEffect(() => {
     localStorage.setItem('likedPosts', JSON.stringify(likedPosts));
   }, [likedPosts]);
@@ -78,8 +77,7 @@ function Feed({ onEditClick }) {
 
   return (
     <div className="feed-container">
-
-      {/* ============ STORIES BAR ============ */}
+      {/* ================= STORIES ================= */}
       <div className="stories-section">
         {[
           { icon: '📷', label: 'Your Story' },
@@ -89,17 +87,17 @@ function Feed({ onEditClick }) {
           { icon: 'A', label: 'Art' },
           { icon: 'M', label: 'Music' },
           { icon: 'N', label: 'Nature' },
-        ].map((s, i) => (
+        ].map((story, i) => (
           <div key={i} className="story-item">
             <div className="story-ring active">
-              <div className="story-content">{s.icon}</div>
+              <div className="story-content">{story.icon}</div>
             </div>
-            <span className="story-name">{s.label}</span>
+            <span className="story-name">{story.label}</span>
           </div>
         ))}
       </div>
 
-      {/* ============ EXPLORE GRID ============ */}
+      {/* ================= POSTS GRID ================= */}
       <div className="explore-grid">
         {posts.map((post, i) => (
           <PostCard
@@ -113,7 +111,7 @@ function Feed({ onEditClick }) {
         ))}
       </div>
 
-      {/* ============ POST VIEWER ============ */}
+      {/* ================= FULLSCREEN VIEWER ================= */}
       {viewerOpen && (
         <PostViewer
           posts={posts}
