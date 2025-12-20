@@ -1,4 +1,4 @@
-📸 Instagram Feed Clone
+📸 Instagram Feed Clone<br>
 
 GitHub Repository:
 https://github.com/mohannamburu18/instagram_feednew
@@ -113,36 +113,36 @@ AI Tools Used
     3 . Gemini
 
 How AI Helped 🧠
-    1. Gemini helped with overall UI and feed design inspiration
-    2. ChatGPT assisted with deployment and environment setup
-    3. Suggested state management for like and save toggles
-    4.  Helped debug CORS and deployment issues
-    5.  Improved component structure and code readability
+    1. Gemini helped with overall UI and feed design inspiration<br>
+    2. ChatGPT assisted with deployment and environment setup<br>
+    3. Suggested state management for like and save toggles<br>
+    4.  Helped debug CORS and deployment issues<br>
+    5.  Improved component structure and code readability<br>
     <br><br>
 
-Example Prompt 💬
-    Create a React Instagram-style feed with a grid of posts and a fullscreen post viewer with next/previous navigation.
+Example Prompt 💬<br>
+    Create a React Instagram-style feed with a grid of posts and a fullscreen post viewer with next/previous navigation.<br>
 
-    My posts are not loading on Vercel and API requests are pending forever. Can you help debug frontend vs backend?
+    My posts are not loading on Vercel and API requests are pending forever. Can you help debug frontend vs backend?<br>
 
     
 
 <br><br>
 Example Correction 🛠️
 
-Problem
-    PostViewer opened but:
-    • Images overlapped with the right sidebar
-    • Background feed was still scrollable
-    • Next / Previous buttons were inconsistent
-    • Viewer looked embedded instead of fullscreen
+Problem<br>
+    PostViewer opened but:<br>
+    1.Images overlapped with the right sidebar<br>
+    2.Background feed was still scrollable<br>
+    3. Next / Previous buttons were inconsistent<br>
+    4.Viewer looked embedded instead of fullscreen<br>
 
-Correction Applied
-    • Added a full-screen overlay layer
-    • Locked background scroll when viewer opens
-    • Separated layout into:
-      – viewer-media (left – image)
-      – viewer-sidebar (right – author, caption, actions)
+Correction Applied<br>
+    1. Added a full-screen overlay layer<br>
+    2. Locked background scroll when viewer opens<br>
+    3.Separated layout into:<br>
+      – viewer-media (left – image)<br>
+      – viewer-sidebar (right – author, caption, actions)<br>
 
 
 <br><br>
