@@ -6,37 +6,37 @@ https://github.com/mohannamburu18/instagram_feednew
 Deployment Link:
 https://instagram-feednew-jc9l6pudq-mohans-projects-7ac7513d.vercel.app/
 
-1. Track Chosen + Why (2–3 lines)
+Ⅰ. Track Chosen + Why 🎯
 
 Track C — Feed (Instagram-style consumption)
     I chose Track C to demonstrate an interactive feed with pagination, modal post viewing, and social actions such as like and save. This track best showcases frontend UX design, API integration, and state management in a production-minded way.
 
-2. Features Implemented (Checklist)
+Ⅱ. Features Implemented 🚀
 
-Frontend (UI)
+Frontend (UI) 🎨
     • Instagram-style feed grid
     • Post viewer modal (desktop and mobile)
     • Next / Previous post navigation
-    • Like toggle with count update
-    • Save (bookmark) toggle using localStorage
+    • Like toggle with count update ❤️
+    • Save (bookmark) toggle using localStorage 🔖
     • Mobile swipe navigation (up / down)
     • Floating actions on mobile (like / save)
     • Responsive design (desktop and mobile)
     • Empty state and loading state
     • Error handling UI
 
-Backend (API)
+Backend (API) ⚙️
     • REST API using Express
     • Get posts with pagination
     • Like a post
     • Create and delete posts
     • Validation with clear error responses
 
-Persistence
+Persistence 💾
     • SQLite database for posts
     • localStorage for likes and saved posts
 
-3. Tech Stack
+Ⅲ. Tech Stack 🧩
 
 Frontend
     • React (Vite)
@@ -48,11 +48,11 @@ Backend
     • Express.js
     • SQLite
 
-Deployment
+Deployment ☁️
     • Frontend: Vercel
     • Backend: Render
 
-4. How to Run the Project
+Ⅳ. How to Run the Project 🏃‍♂️
 
 Backend (Server)
     Open Command Prompt / Terminal:
@@ -68,14 +68,14 @@ Backend (Server)
     Open the application in the browser at:
     http://localhost:5173
 
-5. API Endpoints
+Ⅴ. API Endpoints 🔗
 Method	Endpoint	Description
 GET	/api/posts?page=1&limit=12	Get paginated posts
 POST	/api/posts/:id/like	Like a post
 POST	/api/posts	Create new post
 DELETE	/api/posts/:id	Delete post
 GET	/api/health	Health check
-6. Data Model (Tables / Fields)
+Ⅵ. Data Model 🗄️
 
 posts table
 
@@ -87,26 +87,26 @@ image	TEXT
 likes	INTEGER
 creator_id	TEXT
 created_at	TIMESTAMP
-7. AI Collaboration Log
+Ⅶ. AI Collaboration Log 🤖
 
 AI Tools Used
     • ChatGPT
     • Claude
     • Gemini
 
-How AI Helped (3–5 points)
+How AI Helped 🧠
     • Gemini helped with overall UI and feed design inspiration
     • ChatGPT assisted with deployment and environment setup
     • Suggested state management for like and save toggles
     • Helped debug CORS and deployment issues
     • Improved component structure and code readability
 
-Example Prompt
+Example Prompt 💬
     Create a React Instagram-style feed with a grid of posts and a fullscreen post viewer with next/previous navigation.
 
     My posts are not loading on Vercel and API requests are pending forever. Can you help debug frontend vs backend?
 
-Example Correction
+Example Correction 🛠️
 
 Problem
     PostViewer opened but:
@@ -122,7 +122,7 @@ Correction Applied
       – viewer-media (left – image)
       – viewer-sidebar (right – author, caption, actions)
 
-8. Trade-offs & Next Improvements (3–5 points)
+Ⅷ. Trade-offs & Next Improvements 🔮
 
     • Saved posts are stored locally instead of backend (intentional simplification)
     • Authentication is mocked using localStorage
@@ -130,11 +130,11 @@ Correction Applied
     • Future: Add Saved Posts page
     • Future: Add real user authentication and profiles
 
-9. Sample Data
+Ⅸ. Sample Data 🧪
 
     • Included via SQLite seed data
     • Images loaded from static URLs
 
-10. Demo Video
+Ⅹ. Demo Video 🎥
 
     https://drive.google.com/file/d/1Df1oazf72RH6_KPR6UJ5EZgXff9e69eM/view?usp=sharing
