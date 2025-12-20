@@ -1,4 +1,4 @@
-📸 Instagram Feed Clone
+Instagram Feed Clone
 
 GitHub Repository
 
@@ -10,42 +10,43 @@ https://instagram-feednew-jc9l6pudq-mohans-projects-7ac7513d.vercel.app/
 
 <br><br>
 
-I. Track Chosen + Why 🎯
+I. Track Chosen + Why
 
 Track C — Feed (Instagram-style consumption)
 
 Chosen to demonstrate an interactive, production-minded feed
 
-Showcases pagination, modal post viewing, and like/save actions
+Includes pagination, modal post viewing, and like/save actions
 
-Highlights frontend UX, API integration, and state management together
+Highlights frontend UX, API integration, and state management
 
 <br><br>
 
-II. Features Implemented 🚀
-Frontend (UI) 🎨
+II. Features Implemented
+
+Frontend (UI)
 
 Instagram-style feed grid
 
-Fullscreen post viewer modal (desktop + mobile)
+Fullscreen post viewer modal (desktop and mobile)
 
-Next / Previous post navigation
+Next and Previous post navigation
 
 Like toggle with real-time count update
 
 Save (bookmark) toggle using localStorage
 
-Mobile swipe navigation (up / down)
+Mobile swipe navigation (up and down)
 
 Floating action buttons on mobile
 
-Fully responsive design (desktop + mobile)
+Fully responsive design
 
 Loading and empty states
 
 User-friendly error handling
 
-Backend (API) ⚙️
+Backend (API)
 
 REST API built with Express
 
@@ -59,7 +60,7 @@ Delete posts
 
 Input validation with clear error responses
 
-Persistence 💾
+Persistence
 
 SQLite database for posts
 
@@ -67,7 +68,8 @@ localStorage for likes and saved posts
 
 <br><br>
 
-III. Tech Stack 🧩
+III. Tech Stack
+
 Frontend
 
 React (Vite)
@@ -77,6 +79,7 @@ Custom responsive CSS
 Axios
 
 <br>
+
 Backend
 
 Node.js
@@ -86,7 +89,8 @@ Express.js
 SQLite
 
 <br>
-Deployment ☁️
+
+Deployment
 
 Frontend deployed on Vercel
 
@@ -94,12 +98,13 @@ Backend deployed on Render
 
 <br><br>
 
-IV. How to Run the Project 🏃‍♂️
+IV. How to Run the Project
+
 Backend (Server)
 
-Open Command Prompt / Terminal
+Open Command Prompt or Terminal
 
-Navigate to server folder
+Navigate to the server folder
 
 Install dependencies
 
@@ -111,15 +116,15 @@ npm install
 npm start
 
 
-Backend runs at:
+Backend runs at
 
 http://localhost:5000
 
 Frontend (Client)
 
-Open another Command Prompt / Terminal
+Open another Command Prompt or Terminal
 
-Navigate to client folder
+Navigate to the client folder
 
 Install dependencies
 
@@ -131,13 +136,13 @@ npm install
 npm run dev
 
 
-Frontend runs at:
+Frontend runs at
 
 http://localhost:5173
 
 <br><br>
 
-V. API Endpoints 🔗
+V. API Endpoints
 
 GET /api/posts?page=1&limit=12
 
@@ -161,26 +166,28 @@ Health check endpoint
 
 <br><br>
 
-VI. Data Model 🗄️
-posts Table
+VI. Data Model
 
-id — INTEGER (Primary Key)
+posts table
 
-author — TEXT
+id – INTEGER (Primary Key)
 
-caption — TEXT
+author – TEXT
 
-image — TEXT
+caption – TEXT
 
-likes — INTEGER
+image – TEXT
 
-creator_id — TEXT
+likes – INTEGER
 
-created_at — TIMESTAMP
+creator_id – TEXT
+
+created_at – TIMESTAMP
 
 <br><br>
 
-VII. AI Collaboration Log 🤖
+VII. AI Collaboration Log
+
 AI Tools Used
 
 ChatGPT
@@ -189,25 +196,25 @@ Claude
 
 Gemini
 
-How AI Helped 🧠
+How AI Helped
 
 Assisted with UI and feed design inspiration
 
 Helped with deployment and environment setup
 
-Suggested state management patterns for like/save toggles
+Suggested state management for like and save toggles
 
-Debugged CORS and frontend–backend connection issues
+Debugged CORS and frontend-backend connection issues
 
-Improved component structure and code readability
+Improved component structure and readability
 
-Example Prompts 💬
+Example Prompts
 
-“Create a React Instagram-style feed with a grid of posts and a fullscreen post viewer with next/previous navigation.”
+Create a React Instagram-style feed with a grid of posts and a fullscreen post viewer with next and previous navigation
 
-“My posts are not loading on Vercel, API request is pending forever. Can you help debug frontend vs backend?”
+My posts are not loading on Vercel and API requests are pending forever. Help debug frontend versus backend
 
-Example Correction 🛠️
+Example Correction
 
 Problems Identified
 
@@ -215,9 +222,9 @@ Images overlapped with the right sidebar
 
 Background feed was scrollable when viewer opened
 
-Next / Previous buttons behaved inconsistently
+Next and Previous buttons were inconsistent
 
-Viewer did not appear truly fullscreen
+Viewer was not truly fullscreen
 
 Corrections Applied
 
@@ -225,15 +232,12 @@ Added a fullscreen overlay layer
 
 Locked background scroll when viewer opens
 
-Refactored layout into:
-
-viewer-media (image section)
-
-viewer-sidebar (author, caption, actions)
+Refactored layout into viewer-media and viewer-sidebar
 
 <br><br>
 
-VIII. Trade-offs & Next Improvements 🔮
+VIII. Trade-offs and Next Improvements
+
 Current Limitations
 
 Saved posts stored locally instead of backend
@@ -254,7 +258,7 @@ Full comment system with backend integration
 
 <br><br>
 
-IX. Sample Data 🧪
+IX. Sample Data
 
 Included via SQLite seed data
 
@@ -262,18 +266,16 @@ Images loaded from static URLs
 
 <br><br>
 
-X. Demo Video 🎥
+X. Demo Video
 
 https://drive.google.com/file/d/1Df1oazf72RH6_KPR6UJ5EZgXff9e69eM/view
 
 <br><br>
 
-XI. License 📄
+XI. License
 
 This project is for educational purposes only
 
 <br><br>
 
-XII. Contact 📬
-
-For questions or feedback, reach out through the GitHub repository
+XII. Contact
