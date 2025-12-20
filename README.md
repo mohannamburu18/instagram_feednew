@@ -17,45 +17,45 @@ Track C — Feed (Instagram-style consumption)
 Ⅱ. Features Implemented 🚀
 
 Frontend (UI) 🎨
-    • Instagram-style feed grid
-    • Post viewer modal (desktop and mobile)
-    • Next / Previous post navigation
-    • Like toggle with count update ❤️
-    • Save (bookmark) toggle using localStorage 🔖
-    • Mobile swipe navigation (up / down)
-    • Floating actions on mobile (like / save)
-    • Responsive design (desktop and mobile)
-    • Empty state and loading state
-    • Error handling UI
+    1. Instagram-style feed grid
+    2. Post viewer modal (desktop and mobile)
+    3. Next / Previous post navigation
+    4. Like toggle with count update ❤️
+    5. Save (bookmark) toggle using localStorage 🔖
+    6. Mobile swipe navigation (up / down)
+    7. Floating actions on mobile (like / save)
+    8. Responsive design (desktop and mobile)
+    9. Empty state and loading state
+    10. Error handling UI
 
 Backend (API) ⚙️
-    • REST API using Express
-    • Get posts with pagination
-    • Like a post
-    • Create and delete posts
-    • Validation with clear error responses
+    1. REST API using Express
+    2. Get posts with pagination
+    3. Like a post
+    4. Create and delete posts
+    5. Validation with clear error responses
 
 Persistence 💾
-    • SQLite database for posts
-    • localStorage for likes and saved posts
+    1. SQLite database for posts
+    2 .localStorage for likes and saved posts
     
 
 <br><br>
 Ⅲ. Tech Stack 🧩
 
 Frontend
-    • React (Vite)
-    • CSS (custom, responsive)
-    • Axios
+    1. React (Vite)
+    2. CSS (custom, responsive)
+    3. Axios
 
 Backend
-    • Node.js
-    • Express.js
-    • SQLite
+    1. Node.js
+    2. Express.js
+    3. SQLite
 
 Deployment ☁️
-    • Frontend: Vercel
-    • Backend: Render
+    1. Frontend: Vercel
+    2. Backend: Render
     
 
 <br><br>
@@ -112,11 +112,11 @@ AI Tools Used
     3 . Gemini
 
 How AI Helped 🧠
-    • Gemini helped with overall UI and feed design inspiration
-    • ChatGPT assisted with deployment and environment setup
-    • Suggested state management for like and save toggles
-    • Helped debug CORS and deployment issues
-    • Improved component structure and code readability
+    1. Gemini helped with overall UI and feed design inspiration
+    2. ChatGPT assisted with deployment and environment setup
+    3. Suggested state management for like and save toggles
+    4.  Helped debug CORS and deployment issues
+    5.  Improved component structure and code readability
     <br><br>
 
 Example Prompt 💬
