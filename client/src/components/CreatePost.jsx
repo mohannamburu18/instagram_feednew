@@ -4,111 +4,106 @@ import './CreatePost.css';
 
 function CreatePost({ onSuccess, onCancel }) {
   const currentUser =
-    localStorage.getItem('currentUser') || `user_${Date.now()}`;
+    localStorage.getItem('currentUser') || 'guest';
 
   const [formData, setFormData] = useState({
-    author: '',
+    author: currentUser,
     caption: '',
     image: '',
-    creator_id: currentUser
+    creator_id: currentUser,
   });
 
-  const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const handleChange = (e) => {
-    setFormData(prev => ({
-      ...prev,
-      [e.target.name]: e.target.value
-    }));
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+    setError('');
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!formData.author || !formData.caption || !formData.image) {
-      setErrors({ general: 'All fields are required' });
+      setError('All fields are required');
       return;
     }
 
     setLoading(true);
 
     try {
-      await api.post('/posts', {
+      const res = await api.post('/posts', {
         ...formData,
-        type: 'image'
+        type: 'image',
       });
 
-      onSuccess();
+      if (res.status === 200 || res.status === 201) {
+        onSuccess(); // close modal & refresh feed
+      } else {
+        throw new Error('Post not created');
+      }
+
     } catch (err) {
-      setErrors({
-        general:
-          err.response?.data?.message || 'Failed to create post'
-      });
+      console.error(err);
+      setError(
+        err.response?.data?.message ||
+        'Backend not reachable'
+      );
     } finally {
-      setLoading(false);
+      setLoading(false); // 🔥 critical fix
     }
   };
 
   return (
-    <div className="create-post-overlay">
-      <div className="create-post-card">
+    <div className="create-post-overlay" onClick={onCancel}>
+      <div
+        className="create-post-card"
+        onClick={(e) => e.stopPropagation()}
+      >
         <h2>Create New Post</h2>
 
-        {errors.general && (
-          <div className="error-banner">{errors.general}</div>
-        )}
+        {error && <div className="error-banner">{error}</div>}
 
-        <form onSubmit={handleSubmit} className="create-post-form">
+        <form onSubmit={handleSubmit}>
+          <label>Author *</label>
+          <input
+            name="author"
+            value={formData.author}
+            onChange={handleChange}
+            disabled={loading}
+          />
 
-          <div className="form-group">
-            <label>Author *</label>
-            <input
-              type="text"
-              name="author"
-              value={formData.author}
-              onChange={handleChange}
-              placeholder="Your username"
-            />
-          </div>
+          <label>Caption *</label>
+          <textarea
+            name="caption"
+            value={formData.caption}
+            onChange={handleChange}
+            disabled={loading}
+          />
 
-          <div className="form-group">
-            <label>Caption *</label>
-            <textarea
-              name="caption"
-              rows="4"
-              value={formData.caption}
-              onChange={handleChange}
-              placeholder="Write a caption..."
-            />
-          </div>
-
-          <div className="form-group">
-            <label>Image URL *</label>
-            <input
-              type="text"
-              name="image"
-              value={formData.image}
-              onChange={handleChange}
-              placeholder="https://images.unsplash.com/..."
-            />
-          </div>
+          <label>Image URL *</label>
+          <input
+            name="image"
+            value={formData.image}
+            onChange={handleChange}
+            disabled={loading}
+            placeholder="https://images.unsplash.com/..."
+          />
 
           <div className="form-actions">
             <button
               type="button"
               onClick={onCancel}
-              className="btn-secondary"
+              disabled={loading}
             >
               Cancel
             </button>
 
-            <button
-              type="submit"
-              className="btn-primary"
-              disabled={loading}
-            >
-              {loading ? 'Creating...' : 'Create'}
+            <button type="submit" disabled={loading}>
+              {loading ? 'Creating…' : 'Create'}
             </button>
           </div>
         </form>
