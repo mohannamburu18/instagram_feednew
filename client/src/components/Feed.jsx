@@ -6,158 +6,132 @@ import './Feed.css';
 
 function Feed({ onEditClick }) {
   const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [pagination, setPagination] = useState({
+    currentPage: 1,
+    totalPages: 1,
+    totalPosts: 0,
+    hasNextPage: false,
+  });
+
+  // Current user
+  const [currentUser] = useState(() => {
+    const saved = localStorage.getItem('currentUser');
+    if (saved) return saved;
+    const user = `user_${Date.now()}`;
+    localStorage.setItem('currentUser', user);
+    return user;
+  });
+
+  // Viewer
   const [viewerOpen, setViewerOpen] = useState(false);
   const [viewerIndex, setViewerIndex] = useState(0);
 
-  const [likedPosts, setLikedPosts] = useState(
-    JSON.parse(localStorage.getItem('likedPosts')) || []
-  );
-
-  const [savedPosts, setSavedPosts] = useState(
-    JSON.parse(localStorage.getItem('savedPosts')) || []
-  );
-
-  /* ---------------- FETCH POSTS ---------------- */
+  const POSTS_PER_PAGE = 12;
 
   useEffect(() => {
-    api
-      .get('/posts')
-      .then((res) => {
-        setPosts(res.data.posts);
-      })
-      .catch(() => {
-        // ✅ Fallback data (for Vercel / no backend)
-        setPosts([
-          {
-            id: 1,
-            author: 'travel_explorer',
-            caption: 'Mountain vibes 🏔️',
-            image:
-              'https://images.unsplash.com/photo-1501785888041-af3ef285b470',
-            likes: 120,
-          },
-          {
-            id: 2,
-            author: 'foodie_dreams',
-            caption: 'Pasta is love 🍝',
-            image:
-              'https://images.unsplash.com/photo-1529042410759-befb1204b468',
-            likes: 89,
-          },
-          {
-            id: 3,
-            author: 'fitness_journey',
-            caption: 'Leg day 🔥',
-            image:
-              'https://images.unsplash.com/photo-1517964603305-7217c7f7f47e',
-            likes: 210,
-          },
-          {
-            id: 4,
-            author: 'urban_photographer',
-            caption: 'City lights 🌆',
-            image:
-              'https://images.unsplash.com/photo-1467269204594-9661b134dd2b',
-            likes: 156,
-          },
-        ]);
-      });
+    fetchPosts(1);
   }, []);
 
-  /* ---------------- PERSIST LIKE / SAVE ---------------- */
-
-  useEffect(() => {
-    localStorage.setItem('likedPosts', JSON.stringify(likedPosts));
-  }, [likedPosts]);
-
-  useEffect(() => {
-    localStorage.setItem('savedPosts', JSON.stringify(savedPosts));
-  }, [savedPosts]);
-
-  /* ---------------- ACTIONS ---------------- */
-
-  const handleLike = async (id) => {
-    const alreadyLiked = likedPosts.includes(id);
-
-    setPosts((prev) =>
-      prev.map((post) =>
-        post.id === id
-          ? {
-              ...post,
-              likes: alreadyLiked ? post.likes - 1 : post.likes + 1,
-            }
-          : post
-      )
-    );
-
-    setLikedPosts((prev) =>
-      alreadyLiked ? prev.filter((x) => x !== id) : [...prev, id]
-    );
-
+  const fetchPosts = async (page) => {
     try {
-      await api.post(`/posts/${id}/like`);
-    } catch {
-      // ignore backend error in production
+      setLoading(true);
+      const res = await api.get(
+        `/posts?page=${page}&limit=${POSTS_PER_PAGE}`
+      );
+
+      if (page === 1) {
+        setPosts(res.data.posts);
+      } else {
+        setPosts((prev) => [...prev, ...res.data.posts]);
+      }
+
+      setPagination(res.data.pagination);
+      setError(null);
+    } catch (err) {
+      console.error('Fetch posts error:', err);
+      setError('Failed to fetch posts');
+    } finally {
+      setLoading(false);
     }
   };
 
-  const handleSave = (id) => {
-    setSavedPosts((prev) =>
-      prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]
-    );
+  const handleLike = async (postId) => {
+    try {
+      await api.post(`/posts/${postId}/like`);
+      setPosts((prev) =>
+        prev.map((p) =>
+          p.id === postId ? { ...p, likes: p.likes + 1 } : p
+        )
+      );
+    } catch (err) {
+      console.error('Like error:', err);
+    }
   };
 
-  /* ---------------- UI ---------------- */
+  const handleDelete = async (postId) => {
+    if (!window.confirm('Delete this post?')) return;
+    try {
+      await api.delete(`/posts/${postId}`);
+      setPosts((prev) => prev.filter((p) => p.id !== postId));
+    } catch (err) {
+      console.error('Delete error:', err);
+    }
+  };
+
+  const loadMore = () => {
+    if (pagination.hasNextPage) {
+      fetchPosts(pagination.currentPage + 1);
+    }
+  };
+
+  if (loading && posts.length === 0) {
+    return <p className="loading-text">Loading posts...</p>;
+  }
 
   return (
     <div className="feed-container">
-      {/* 🔵 STORIES BAR */}
-      <div className="stories-section">
-        {[
-          { id: 0, name: 'Your Story', icon: '📷', active: true },
-          { id: 1, name: 'Travel', icon: 'T' },
-          { id: 2, name: 'Food', icon: 'F' },
-          { id: 3, name: 'Fitness', icon: 'F' },
-          { id: 4, name: 'Art', icon: 'A' },
-          { id: 5, name: 'Music', icon: 'M' },
-          { id: 6, name: 'Nature', icon: 'N' },
-        ].map((story) => (
-          <div key={story.id} className="story-item">
-            <div className="story-avatar">
-              <div className={`story-ring ${story.active ? 'active' : ''}`}>
-                <div className="story-content">{story.icon}</div>
-              </div>
-            </div>
-            <span className="story-name">{story.name}</span>
-          </div>
-        ))}
-      </div>
+      {error && (
+        <div className="error-container">
+          ⚠️ {error}
+          <button onClick={() => fetchPosts(1)}>Try Again</button>
+        </div>
+      )}
 
-      {/* 🔥 POSTS GRID */}
       <div className="explore-grid">
-        {posts.map((post, i) => (
+        {posts.map((post, index) => (
           <PostCard
             key={post.id}
             post={post}
+            onLike={handleLike}
+            onDelete={handleDelete}
+            onEdit={onEditClick}
+            currentUser={currentUser}
             onView={() => {
-              setViewerIndex(i);
+              setViewerIndex(index);
               setViewerOpen(true);
             }}
           />
         ))}
       </div>
 
-      {/* 🖼 POST VIEWER */}
+      {pagination.hasNextPage && (
+        <div className="load-more-container">
+          <button onClick={loadMore} disabled={loading}>
+            {loading ? 'Loading...' : 'Load More'}
+          </button>
+        </div>
+      )}
+
       {viewerOpen && (
         <PostViewer
           posts={posts}
           initialIndex={viewerIndex}
           onClose={() => setViewerOpen(false)}
           onLike={handleLike}
-          onSave={handleSave}
-          likedPosts={likedPosts}
-          savedPosts={savedPosts}
-          onEdit={onEditClick}
+          onDelete={handleDelete}
+          currentUser={currentUser}
         />
       )}
     </div>
