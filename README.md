@@ -18,15 +18,16 @@ Track C — Feed (Instagram-style consumption)
 
 Frontend (UI) 🎨
     1. Instagram-style feed grid
-    2. Post viewer modal (desktop and mobile)
-    3. Next / Previous post navigation
-    4. Like toggle with count update ❤️
-    5. Save (bookmark) toggle using localStorage 🔖
-    6. Mobile swipe navigation (up / down)
-    7. Floating actions on mobile (like / save)
-    8. Responsive design (desktop and mobile)
-    9. Empty state and loading state
-    10. Error handling UI
+    <br>
+    2. Post viewer modal (desktop and mobile)<br>
+    3. Next / Previous post navigation<br>
+    4. Like toggle with count update ❤️<br>
+    5. Save (bookmark) toggle using localStorage 🔖<br>
+    6. Mobile swipe navigation (up / down)<br>
+    7. Floating actions on mobile (like / save)<br>
+    8. Responsive design (desktop and mobile)<br>
+    9. Empty state and loading state<br>
+    10. Error handling UI<br>
 
 Backend (API) ⚙️
     1. REST API using Express
