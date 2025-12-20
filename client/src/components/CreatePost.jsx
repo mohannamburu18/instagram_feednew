@@ -3,7 +3,6 @@ import api from '../api';
 import './CreatePost.css';
 
 function CreatePost({ onSuccess, onCancel }) {
-  // Get current user ID
   const currentUser =
     localStorage.getItem('currentUser') || `user_${Date.now()}`;
 
@@ -73,12 +72,8 @@ function CreatePost({ onSuccess, onCancel }) {
     setLoading(true);
 
     try {
-      await api.post('/posts', {
-        ...formData,
-        type: 'image'
-      });
-
-      onSuccess();
+      await api.post('/posts', formData);
+      onSuccess(); // go back to feed
     } catch (err) {
       console.error('Create post error:', err);
       setErrors({
@@ -104,7 +99,6 @@ function CreatePost({ onSuccess, onCancel }) {
         )}
 
         <form onSubmit={handleSubmit} className="create-post-form">
-          {/* AUTHOR */}
           <div className="form-group">
             <label>Author *</label>
             <input
@@ -119,7 +113,6 @@ function CreatePost({ onSuccess, onCancel }) {
             )}
           </div>
 
-          {/* CAPTION */}
           <div className="form-group">
             <label>Caption *</label>
             <textarea
@@ -137,7 +130,6 @@ function CreatePost({ onSuccess, onCancel }) {
             )}
           </div>
 
-          {/* IMAGE */}
           <div className="form-group">
             <label>Image URL *</label>
             <input
@@ -153,22 +145,18 @@ function CreatePost({ onSuccess, onCancel }) {
             )}
           </div>
 
-          {/* PREVIEW */}
           {previewImage && !errors.image && (
             <div className="image-preview">
               <img
                 src={previewImage}
                 alt="Preview"
                 onError={() =>
-                  setErrors({
-                    image: 'Invalid image URL'
-                  })
+                  setErrors({ image: 'Invalid image URL' })
                 }
               />
             </div>
           )}
 
-          {/* ACTIONS */}
           <div className="form-actions">
             <button
               type="button"
