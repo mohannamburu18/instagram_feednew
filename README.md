@@ -107,9 +107,9 @@ posts table
 
 
 AI Tools Used
-    • ChatGPT
-    • Claude
-    • Gemini
+    1. ChatGPT
+    2.  Claude
+    3 . Gemini
 
 How AI Helped 🧠
     • Gemini helped with overall UI and feed design inspiration
@@ -117,12 +117,16 @@ How AI Helped 🧠
     • Suggested state management for like and save toggles
     • Helped debug CORS and deployment issues
     • Improved component structure and code readability
+    <br><br>
 
 Example Prompt 💬
     Create a React Instagram-style feed with a grid of posts and a fullscreen post viewer with next/previous navigation.
 
     My posts are not loading on Vercel and API requests are pending forever. Can you help debug frontend vs backend?
 
+    
+
+<br><br>
 Example Correction 🛠️
 
 Problem
