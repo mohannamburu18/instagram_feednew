@@ -1,9 +1,11 @@
 📸 Instagram Feed Clone
 
-GitHub Repository:
+GitHub Repository
+
 https://github.com/mohannamburu18/instagram_feednew
 
-Live Deployment:
+Live Deployment
+
 https://instagram-feednew-jc9l6pudq-mohans-projects-7ac7513d.vercel.app/
 
 <br><br>
@@ -12,12 +14,16 @@ I. Track Chosen + Why 🎯
 
 Track C — Feed (Instagram-style consumption)
 
-I chose Track C to demonstrate an interactive, production-minded feed with pagination, modal post viewing, and social actions like like/save. This track best highlights frontend UX design, API integration, and state management working together smoothly.
+Chosen to demonstrate an interactive, production-minded feed
+
+Showcases pagination, modal post viewing, and like/save actions
+
+Highlights frontend UX, API integration, and state management together
 
 <br><br>
 
 II. Features Implemented 🚀
-A. Frontend (UI) 🎨
+Frontend (UI) 🎨
 
 Instagram-style feed grid
 
@@ -25,9 +31,9 @@ Fullscreen post viewer modal (desktop + mobile)
 
 Next / Previous post navigation
 
-Like toggle with real-time count update ❤️
+Like toggle with real-time count update
 
-Save (bookmark) toggle using localStorage 🔖
+Save (bookmark) toggle using localStorage
 
 Mobile swipe navigation (up / down)
 
@@ -39,7 +45,7 @@ Loading and empty states
 
 User-friendly error handling
 
-B. Backend (API) ⚙️
+Backend (API) ⚙️
 
 REST API built with Express
 
@@ -47,11 +53,13 @@ Fetch posts with pagination
 
 Like a post
 
-Create and delete posts
+Create posts
+
+Delete posts
 
 Input validation with clear error responses
 
-C. Persistence 💾
+Persistence 💾
 
 SQLite database for posts
 
@@ -68,6 +76,7 @@ Custom responsive CSS
 
 Axios
 
+<br>
 Backend
 
 Node.js
@@ -76,18 +85,25 @@ Express.js
 
 SQLite
 
+<br>
 Deployment ☁️
 
-Frontend: Vercel
+Frontend deployed on Vercel
 
-Backend: Render
+Backend deployed on Render
 
 <br><br>
 
 IV. How to Run the Project 🏃‍♂️
-A. Backend (Server)
+Backend (Server)
 
-Open Command Prompt / Terminal:
+Open Command Prompt / Terminal
+
+Navigate to server folder
+
+Install dependencies
+
+Start the server
 
 cd instagram_feednew
 cd server
@@ -96,11 +112,18 @@ npm start
 
 
 Backend runs at:
+
 http://localhost:5000
 
-B. Frontend (Client)
+Frontend (Client)
 
-Open another Command Prompt / Terminal:
+Open another Command Prompt / Terminal
+
+Navigate to client folder
+
+Install dependencies
+
+Start development server
 
 cd instagram_feednew
 cd client
@@ -109,35 +132,56 @@ npm run dev
 
 
 Frontend runs at:
+
 http://localhost:5173
 
 <br><br>
 
 V. API Endpoints 🔗
-Method	Endpoint	Description
-GET	/api/posts?page=1&limit=12	Get paginated posts
-POST	/api/posts/:id/like	Like a post
-POST	/api/posts	Create a new post
-DELETE	/api/posts/:id	Delete a post
-GET	/api/health	Health check
+
+GET /api/posts?page=1&limit=12
+
+Fetch paginated posts
+
+POST /api/posts/:id/like
+
+Like a post
+
+POST /api/posts
+
+Create a new post
+
+DELETE /api/posts/:id
+
+Delete a post
+
+GET /api/health
+
+Health check endpoint
 
 <br><br>
 
 VI. Data Model 🗄️
 posts Table
-Field	Type
-id	INTEGER (Primary Key)
-author	TEXT
-caption	TEXT
-image	TEXT
-likes	INTEGER
-creator_id	TEXT
-created_at	TIMESTAMP
+
+id — INTEGER (Primary Key)
+
+author — TEXT
+
+caption — TEXT
+
+image — TEXT
+
+likes — INTEGER
+
+creator_id — TEXT
+
+created_at — TIMESTAMP
 
 <br><br>
 
 VII. AI Collaboration Log 🤖
-A. AI Tools Used
+AI Tools Used
 
 ChatGPT
 
@@ -145,41 +189,37 @@ Claude
 
 Gemini
 
-B. How AI Helped 🧠
+How AI Helped 🧠
 
-Gemini helped with overall UI and feed design inspiration
+Assisted with UI and feed design inspiration
 
-ChatGPT assisted with deployment and environment setup
+Helped with deployment and environment setup
 
 Suggested state management patterns for like/save toggles
 
-Helped debug CORS and frontend–backend connection issues
+Debugged CORS and frontend–backend connection issues
 
 Improved component structure and code readability
 
-C. Example Prompts 💬
-
-Prompt 1:
+Example Prompts 💬
 
 “Create a React Instagram-style feed with a grid of posts and a fullscreen post viewer with next/previous navigation.”
 
-Prompt 2:
-
 “My posts are not loading on Vercel, API request is pending forever. Can you help debug frontend vs backend?”
 
-D. Example Correction 🛠️
+Example Correction 🛠️
 
-Problem Identified:
+Problems Identified
 
 Images overlapped with the right sidebar
 
 Background feed was scrollable when viewer opened
 
-Next / Previous buttons were inconsistent
+Next / Previous buttons behaved inconsistently
 
-Viewer was not truly fullscreen
+Viewer did not appear truly fullscreen
 
-Correction Applied:
+Corrections Applied
 
 Added a fullscreen overlay layer
 
@@ -230,10 +270,10 @@ https://drive.google.com/file/d/1Df1oazf72RH6_KPR6UJ5EZgXff9e69eM/view
 
 XI. License 📄
 
-This project is for educational purposes only.
+This project is for educational purposes only
 
 <br><br>
 
 XII. Contact 📬
 
-For questions or feedback, feel free to reach out through the project repository.
+For questions or feedback, reach out through the GitHub repository
