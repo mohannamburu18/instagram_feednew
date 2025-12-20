@@ -18,20 +18,27 @@ function Feed({ onEditClick }) {
   );
 
   /* ================= FETCH POSTS ================= */
-  useEffect(() => {
-    api
-      .get('/posts')
-      .then((res) => setPosts(res.data.posts || []))
-      .catch((err) => console.error('Fetch posts error:', err));
-  }, []);
+ useEffect(() => {
+  let mounted = true;
 
-  /* ================= LOCK BACKGROUND SCROLL ================= */
-  useEffect(() => {
-    document.body.style.overflow = viewerOpen ? 'hidden' : 'auto';
-    return () => {
-      document.body.style.overflow = 'auto';
-    };
-  }, [viewerOpen]);
+  api
+    .get('/posts')
+    .then((res) => {
+      if (!mounted) return;
+
+      // backend returns { success, posts, pagination }
+      setPosts(res.data.posts || []);
+    })
+    .catch((err) => {
+      console.error('Failed to load posts:', err);
+      setPosts([]);
+    });
+
+  return () => {
+    mounted = false;
+  };
+}, []);
+
 
   /* ================= LIKE HANDLER ================= */
   const handleLike = async (id) => {
