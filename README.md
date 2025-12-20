@@ -74,10 +74,10 @@ Frontend (Client)
 
 Open Command Prompt / Terminal:
 
-cd instagram_feednew
-cd client
-npm install
-npm run dev
+1. cd instagram_feednew
+2. cd client
+3. npm install
+4. npm run dev
 
 
 Open the application in the browser at:
