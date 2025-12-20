@@ -100,14 +100,8 @@ http://localhost:5173
 
 posts table
 
-Field	Type
-id	INTEGER (PK)
-author	TEXT
-caption	TEXT
-image	TEXT
-likes	INTEGER
-creator_id	TEXT
-created_at	TIMESTAMP
+<img width="391" height="286" alt="image" src="https://github.com/user-attachments/assets/19b55b87-1b31-4d89-9360-f856070b3718" />
+
 <br><br>
 Ⅶ. AI Collaboration Log 🤖
 
