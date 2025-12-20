@@ -1,6 +1,5 @@
 Instagram Feed Clone
-
-GitHub Repository
+Repository
 
 https://github.com/mohannamburu18/instagram_feednew
 
@@ -8,22 +7,17 @@ Live Deployment
 
 https://instagram-feednew-jc9l6pudq-mohans-projects-7ac7513d.vercel.app/
 
-<br><br>
-
 I. Track Chosen + Why
 
 Track C — Feed (Instagram-style consumption)
 
-Chosen to demonstrate an interactive, production-minded feed
+Demonstrates an interactive, production-minded feed
 
 Includes pagination, modal post viewing, and like/save actions
 
-Highlights frontend UX, API integration, and state management
-
-<br><br>
+Showcases frontend UX, API integration, and state management
 
 II. Features Implemented
-
 Frontend (UI)
 
 Instagram-style feed grid
@@ -66,10 +60,7 @@ SQLite database for posts
 
 localStorage for likes and saved posts
 
-<br><br>
-
 III. Tech Stack
-
 Frontend
 
 React (Vite)
@@ -77,8 +68,6 @@ React (Vite)
 Custom responsive CSS
 
 Axios
-
-<br>
 
 Backend
 
@@ -88,18 +77,13 @@ Express.js
 
 SQLite
 
-<br>
-
 Deployment
 
-Frontend deployed on Vercel
+Frontend: Vercel
 
-Backend deployed on Render
-
-<br><br>
+Backend: Render
 
 IV. How to Run the Project
-
 Backend (Server)
 
 Open Command Prompt or Terminal
@@ -116,7 +100,7 @@ npm install
 npm start
 
 
-Backend runs at
+Backend runs at:
 
 http://localhost:5000
 
@@ -136,38 +120,28 @@ npm install
 npm run dev
 
 
-Frontend runs at
+Frontend runs at:
 
 http://localhost:5173
-
-<br><br>
 
 V. API Endpoints
 
 GET /api/posts?page=1&limit=12
-
 Fetch paginated posts
 
 POST /api/posts/:id/like
-
 Like a post
 
 POST /api/posts
-
 Create a new post
 
 DELETE /api/posts/:id
-
 Delete a post
 
 GET /api/health
-
 Health check endpoint
 
-<br><br>
-
 VI. Data Model
-
 posts table
 
 id – INTEGER (Primary Key)
@@ -184,10 +158,7 @@ creator_id – TEXT
 
 created_at – TIMESTAMP
 
-<br><br>
-
 VII. AI Collaboration Log
-
 AI Tools Used
 
 ChatGPT
@@ -202,17 +173,17 @@ Assisted with UI and feed design inspiration
 
 Helped with deployment and environment setup
 
-Suggested state management for like and save toggles
+Suggested state management for like/save toggles
 
-Debugged CORS and frontend-backend connection issues
+Debugged CORS and frontend–backend connection issues
 
-Improved component structure and readability
+Improved component structure and code readability
 
 Example Prompts
 
-Create a React Instagram-style feed with a grid of posts and a fullscreen post viewer with next and previous navigation
+Create a React Instagram-style feed with a grid of posts and a fullscreen post viewer with next/previous navigation
 
-My posts are not loading on Vercel and API requests are pending forever. Help debug frontend versus backend
+My posts are not loading on Vercel and API requests are pending forever. Help debug frontend vs backend
 
 Example Correction
 
@@ -222,7 +193,7 @@ Images overlapped with the right sidebar
 
 Background feed was scrollable when viewer opened
 
-Next and Previous buttons were inconsistent
+Next/Previous buttons were inconsistent
 
 Viewer was not truly fullscreen
 
@@ -234,10 +205,7 @@ Locked background scroll when viewer opens
 
 Refactored layout into viewer-media and viewer-sidebar
 
-<br><br>
-
 VIII. Trade-offs and Next Improvements
-
 Current Limitations
 
 Saved posts stored locally instead of backend
@@ -256,26 +224,20 @@ Backend persistence for saved posts
 
 Full comment system with backend integration
 
-<br><br>
-
 IX. Sample Data
 
 Included via SQLite seed data
 
 Images loaded from static URLs
 
-<br><br>
-
 X. Demo Video
 
 https://drive.google.com/file/d/1Df1oazf72RH6_KPR6UJ5EZgXff9e69eM/view
-
-<br><br>
 
 XI. License
 
 This project is for educational purposes only
 
-<br><br>
-
 XII. Contact
+
+For questions or feedback, reach out through the GitHub repository
