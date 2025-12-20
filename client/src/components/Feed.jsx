@@ -9,22 +9,17 @@ function Feed({ onEditClick }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const [pagination, setPagination] = useState({
-    currentPage: 1,
-    totalPages: 1,
-    totalPosts: 0,
-    hasNextPage: false,
-  });
-
-  // Viewer state
   const [viewerOpen, setViewerOpen] = useState(false);
   const [viewerIndex, setViewerIndex] = useState(0);
 
-  // Like / Save state (local)
-  const [likedPosts, setLikedPosts] = useState([]);
-  const [savedPosts, setSavedPosts] = useState([]);
+  // ✅ Load from localStorage
+  const [likedPosts, setLikedPosts] = useState(() =>
+    JSON.parse(localStorage.getItem('likedPosts')) || []
+  );
+  const [savedPosts, setSavedPosts] = useState(() =>
+    JSON.parse(localStorage.getItem('savedPosts')) || []
+  );
 
-  // Current user
   const [currentUser] = useState(() => {
     const saved = localStorage.getItem('currentUser');
     if (saved) return saved;
@@ -39,42 +34,50 @@ function Feed({ onEditClick }) {
     fetchPosts(1);
   }, []);
 
+  // ✅ persist like/save
+  useEffect(() => {
+    localStorage.setItem('likedPosts', JSON.stringify(likedPosts));
+  }, [likedPosts]);
+
+  useEffect(() => {
+    localStorage.setItem('savedPosts', JSON.stringify(savedPosts));
+  }, [savedPosts]);
+
   const fetchPosts = async (page) => {
     try {
       setLoading(true);
       const res = await api.get(`/posts?page=${page}&limit=${POSTS_PER_PAGE}`);
-
-      if (page === 1) {
-        setPosts(res.data.posts);
-      } else {
-        setPosts((prev) => [...prev, ...res.data.posts]);
-      }
-
-      setPagination(res.data.pagination);
+      setPosts(res.data.posts);
       setError(null);
-    } catch (err) {
-      console.error(err);
+    } catch {
       setError('Failed to fetch posts');
     } finally {
       setLoading(false);
     }
   };
 
+  // ✅ FIXED like toggle
   const handleLike = async (postId) => {
+    const alreadyLiked = likedPosts.includes(postId);
+
     try {
       await api.post(`/posts/${postId}/like`);
+
       setPosts((prev) =>
         prev.map((p) =>
-          p.id === postId ? { ...p, likes: p.likes + 1 } : p
+          p.id === postId
+            ? { ...p, likes: alreadyLiked ? p.likes - 1 : p.likes + 1 }
+            : p
         )
       );
+
       setLikedPosts((prev) =>
-        prev.includes(postId)
+        alreadyLiked
           ? prev.filter((id) => id !== postId)
           : [...prev, postId]
       );
     } catch (err) {
-      console.error('Like error:', err);
+      console.error(err);
     }
   };
 
@@ -87,44 +90,19 @@ function Feed({ onEditClick }) {
   };
 
   const handleDelete = async (postId) => {
-    if (!window.confirm('Delete this post?')) return;
-    try {
-      await api.delete(`/posts/${postId}`);
-      setPosts((prev) => prev.filter((p) => p.id !== postId));
-      setViewerOpen(false);
-    } catch (err) {
-      console.error('Delete error:', err);
-    }
+    await api.delete(`/posts/${postId}`);
+    setPosts((prev) => prev.filter((p) => p.id !== postId));
+    setViewerOpen(false);
   };
-
-  const loadMore = () => {
-    if (pagination.hasNextPage) {
-      fetchPosts(pagination.currentPage + 1);
-    }
-  };
-
-  if (loading && posts.length === 0) {
-    return <p className="loading-text">Loading posts...</p>;
-  }
 
   return (
     <div className="feed-container">
-      {error && (
-        <div className="error-container">
-          ⚠️ {error}
-          <button onClick={() => fetchPosts(1)}>Try Again</button>
-        </div>
-      )}
-
       <div className="explore-grid">
         {posts.map((post, index) => (
           <PostCard
             key={post.id}
             post={post}
             currentUser={currentUser}
-            onLike={handleLike}
-            onDelete={handleDelete}
-            onEdit={onEditClick}
             onView={() => {
               setViewerIndex(index);
               setViewerOpen(true);
@@ -132,14 +110,6 @@ function Feed({ onEditClick }) {
           />
         ))}
       </div>
-
-      {pagination.hasNextPage && (
-        <div className="load-more-container">
-          <button onClick={loadMore} disabled={loading}>
-            {loading ? 'Loading...' : 'Load More'}
-          </button>
-        </div>
-      )}
 
       {viewerOpen && (
         <PostViewer
