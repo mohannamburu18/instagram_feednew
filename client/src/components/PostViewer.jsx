@@ -34,13 +34,15 @@ function PostViewer({
 
   const handleNext = () => {
     if (currentIndex < posts.length - 1) {
-      setCurrentIndex(i => i + 1);
+      setCurrentIndex((i) => i + 1);
+      setShowMenu(false);
     }
   };
 
   const handlePrevious = () => {
     if (currentIndex > 0) {
-      setCurrentIndex(i => i - 1);
+      setCurrentIndex((i) => i - 1);
+      setShowMenu(false);
     }
   };
 
@@ -78,14 +80,31 @@ function PostViewer({
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
     >
+      {/* Close */}
       <button className="viewer-close-btn" onClick={onClose}>✕</button>
 
-      {/* Desktop arrows */}
+      {/* Navigation buttons */}
       {currentIndex > 0 && (
-        <button className="viewer-nav-btn prev" onClick={handlePrevious}>‹</button>
+        <button
+          className="viewer-nav-btn prev"
+          onClick={(e) => {
+            e.stopPropagation();
+            handlePrevious();
+          }}
+        >
+          ‹
+        </button>
       )}
       {currentIndex < posts.length - 1 && (
-        <button className="viewer-nav-btn next" onClick={handleNext}>›</button>
+        <button
+          className="viewer-nav-btn next"
+          onClick={(e) => {
+            e.stopPropagation();
+            handleNext();
+          }}
+        >
+          ›
+        </button>
       )}
 
       <div className="viewer-content">
@@ -116,7 +135,9 @@ function PostViewer({
                   {currentPost.author.charAt(0).toUpperCase()}
                 </div>
                 <div className="viewer-author-info">
-                  <span className="viewer-author-name">{currentPost.author}</span>
+                  <span className="viewer-author-name">
+                    {currentPost.author}
+                  </span>
                   <span className="viewer-post-time">5h ago</span>
                 </div>
               </div>
