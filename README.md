@@ -1,278 +1,130 @@
-# Instagram-Style Feed Application
+1. Track Chosen + Why (2–3 lines)
+Track C — Feed (Instagram-style consumption)
+I chose Track C to demonstrate an interactive feed with pagination, modal post viewing, and social actions like like/save. This track best showcases frontend UX, API integration, and state management in a production-minded way.
 
-## Track Chosen + Why
-**Track C — Scroll Feed (Instagram-style consumption)**
+2. Features Implemented (Checklist)
+Frontend (UI)
+•	Instagram-style feed grid
+•	Post viewer modal (desktop + mobile)
+•	Next / Previous post navigation
+•	Like toggle (with count update)
+•	Save (bookmark) toggle using localStorage
+•	Mobile swipe navigation (up/down)
+•	Floating actions on mobile (like/save)
+•	Responsive design (desktop + mobile)
+•	Empty state + loading state
+•	Error handling UI
 
-I chose this track because it closely mimics real-world social media applications, allowing me to demonstrate full-stack development skills including infinite scroll implementation, state management, API pagination, and interactive features like likes/saves. This track showcases both frontend UX patterns and backend data handling that are core to modern web applications.
+Backend (API)
+•	REST API using Express
+•	Get posts (pagination)
+•	Like a post
+•	Create / Delete post
+•	Validation + error responses
+Persistence
+•	SQLite database for posts
+•	localStorage for likes & saved posts
 
-## Features Implemented
-- [x] **Frontend (UI)**
-  - [x] 3 screens: Feed View, Create Post, Edit Post
-  - [x] Working form to create/update posts with image preview
-  - [x] List/feed view displaying posts in card format
-  - [x] Form validation (required fields for caption and image)
-  - [x] Empty state when no posts exist
-  
-- [x] **Backend (API)**
-  - [x] REST API with 5 endpoints (create, list, update, delete, like)
-  - [x] Pagination support (page & limit parameters)
-  - [x] Input validation with clear error messages
-  - [x] Error handling middleware
-  
-- [x] **Persistence**
-  - [x] SQLite database with posts table
-  - [x] Local storage for likes/saves state
-  
-- [x] **Production Basics**
-  - [x] Clean folder structure (client/server separation)
-  - [x] Clear run instructions
-  - [x] Environment variables with .env.example
-  - [x] CORS configuration
-  
-- [x] **Track-Specific Features**
-  - [x] Pagination with "Load More" button
-  - [x] Like/Save toggle with localStorage persistence
-  - [x] Like count display and animation
-  - [x] Responsive card-based layout
+3. Tech Stack
+Frontend
+•	React (Vite)
+•	CSS (custom, responsive)
+•	Axios
+Backend
+•	Node.js
+•	Express.js
+•	SQLite
+Deployment
+•	Frontend: Vercel
+•	Backend: Render
 
-## Tech Stack
 
-### Frontend
-- **React** (v18) - UI framework
-- **Vite** - Build tool and dev server
-- **Axios** - HTTP client
-- **CSS3** - Styling with flexbox/grid
-
-### Backend
-- **Node.js** - Runtime environment
-- **Express.js** - Web framework
-- **SQLite3** - Database
-- **Multer** - File upload handling
-- **dotenv** - Environment configuration
-- **cors** - Cross-origin resource sharing
-
-## How to Run Locally
-
-### Prerequisites
-- Node.js (v16 or higher)
-- npm or yarn
-
-### Backend Setup
-```bash
-# Navigate to server directory
+4. How to run:
+1.	Clone the repository from GitHub using
+git clone https://github.com/mohannamburu18/instagram_feednew.git
+2.	Move into the project directory
+cd instagram_feednew
+3.	Navigate to the backend folder
 cd server
-
-# Install dependencies
+4.	Install backend dependencies
 npm install
-
-# Create .env file (or copy from .env.example)
-cp .env.example .env
-
-# Start the server
-npm run dev
-
-# Server will run on http://localhost:5000
-```
-
-### Frontend Setup
-```bash
-# Navigate to client directory (in a new terminal)
+5.	Create a .env file inside the server folder and add PORT=5000
+6.	Start the backend server
+npm run dev or npm start
+7.	Open a new terminal window
+8.	Navigate to the frontend folder
 cd client
-
-# Install dependencies
+9.	Install frontend dependencies
 npm install
-
-# Start the development server
+10.	Create a .env file inside the client folder and add VITE_API_URL=http://localhost:5000/api
+11.	Restart the frontend server
 npm run dev
+12.	Open the application in the browser at http://localhost:5173
 
-# Client will run on http://localhost:5173
-```
+5.API Endpoints
+Method	Endpoint	Description
+GET	/api/posts?page=1&limit=12	Get paginated posts
+POST	/api/posts/:id/like	Like a post
+POST	/api/posts	Create new post
+DELETE	/api/posts/:id	Delete post
+GET	/api/health	Health check
 
-### Quick Start (from root directory)
-```bash
-# Install all dependencies
-cd server && npm install && cd ../client && npm install && cd ..
+6. Data Model (Tables / Fields)
+posts table
+Field	Type
+id	INTEGER (PK)
+author	TEXT
+caption	TEXT
+image	TEXT
+likes	INTEGER
+creator_id	TEXT
+created_at	TIMESTAMP
 
-# Start backend (terminal 1)
-cd server && npm run dev
 
-# Start frontend (terminal 2)
-cd client && npm run dev
-```
+7. AI Collaboration Log
+AI Tools Used
+•	ChatGPT
+•	Claude
+•	Gemini
 
-## API Endpoints List
+How AI Helped (3–5 bullets)
+1.	Gemini helped getting images of  overall design
+2.	Chatgpt helped in deployement
+3.	Suggested state management for like/save toggle
+4.	Helped debug CORS and deployment issues
+5.	Improved component structure and readability
+Example Prompt
+Create a React Instagram-style feed with a grid of posts and a fullscreen post viewer with next/previous navigation.
+My posts are not loading on Vercel, API request is pending forever. Can you help debug frontend vs backend?”
 
-| Method | Endpoint | Description | Request Body | Response |
-|--------|----------|-------------|--------------|----------|
-| GET | `/api/posts` | Get all posts with pagination | Query: `page`, `limit` | `{ posts: [], currentPage, totalPages, totalPosts }` |
-| POST | `/api/posts` | Create a new post | `{ caption, image, author }` | `{ message, post }` |
-| PUT | `/api/posts/:id` | Update a post | `{ caption, image }` | `{ message, post }` |
-| DELETE | `/api/posts/:id` | Delete a post | - | `{ message }` |
-| POST | `/api/posts/:id/like` | Toggle like on a post | - | `{ message, likes }` |
 
-### Example Requests
+Example Correction
+Problem
+•	PostViewer opened but:
+o	Images overlapped with right sidebar
+o	Background feed was still scrollable
+o	Next/Previous buttons were inconsistent
+o	Viewer looked embedded, not truly fullscreen
+Your correction
+•	Added a full-screen overlay layer
+•	Locked background scroll when viewer opens
+•	Separated layout into:
+o	viewer-media (left → image)
+o	viewer-sidebar (right → author, caption, actions)
+ 
 
-**Create Post**
-```bash
-curl -X POST http://localhost:5000/api/posts \
-  -H "Content-Type: application/json" \
-  -d '{
-    "caption": "Beautiful sunset!",
-    "image": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4",
-    "author": "johndoe"
-  }'
-```
+8. Trade-offs & Next Improvements (3–5 bullets)
+	Saved posts are stored locally instead of backend (intentional simplification)
+	Authentication is mocked using localStorage
+	Comments are UI-only (no backend yet)
+	Future: add Saved Posts page
+	Future: add real user auth and profiles
 
-**Get Posts (Paginated)**
-```bash
-curl "http://localhost:5000/api/posts?page=1&limit=10"
-```
 
-**Like a Post**
-```bash
-curl -X POST http://localhost:5000/api/posts/1/like
-```
+9. Sample Data
+•	Included via SQLite seed data
+•	Images loaded from static URLs
 
-## Data Model
+10. Demo Video 
+https://drive.google.com/file/d/1Df1oazf72RH6_KPR6UJ5EZgXff9e69eM/view?usp=sharing
 
-### Posts Table
-```sql
-CREATE TABLE posts (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  author TEXT NOT NULL,
-  caption TEXT NOT NULL,
-  image TEXT NOT NULL,
-  likes INTEGER DEFAULT 0,
-  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
-);
-```
-
-| Field | Type | Constraints | Description |
-|-------|------|-------------|-------------|
-| id | INTEGER | PRIMARY KEY, AUTO INCREMENT | Unique post identifier |
-| author | TEXT | NOT NULL | Username of post creator |
-| caption | TEXT | NOT NULL | Post caption/description |
-| image | TEXT | NOT NULL | Image URL or base64 string |
-| likes | INTEGER | DEFAULT 0 | Number of likes |
-| created_at | DATETIME | DEFAULT NOW | Post creation timestamp |
-| updated_at | DATETIME | DEFAULT NOW | Last update timestamp |
-
-### Local Storage Schema
-```javascript
-{
-  "likedPosts": ["1", "3", "5"],  // Array of liked post IDs
-  "savedPosts": ["2", "4"]        // Array of saved post IDs
-}
-```
-
-## AI Usage Log
-
-### AI Tools Used
-- **Claude (Anthropic)** - Primary development assistant
-- **GitHub Copilot** - Code completion and suggestions
-
-### How AI Helped
-1. **Rapid API Structure Setup**: AI helped scaffold the Express.js REST API with proper error handling middleware and validation patterns, saving 2-3 hours of boilerplate setup.
-
-2. **SQLite Schema Design**: Generated optimized database schema with proper indexes and constraints, including timestamp handling and foreign key relationships.
-
-3. **React State Management**: Provided best practices for managing local state (likes/saves) alongside server state, implementing optimistic UI updates for better UX.
-
-4. **Pagination Logic**: Assisted with implementing efficient pagination on both backend (SQL LIMIT/OFFSET) and frontend (Load More button with state management).
-
-5. **CSS Responsive Layout**: Generated Instagram-like card layout with proper responsive breakpoints and CSS Grid/Flexbox patterns.
-
-### Example Prompt
-```
-"Create a REST API endpoint for paginated posts in Express.js that:
-- Accepts page and limit query parameters
-- Defaults to page 1 and limit 10
-- Returns posts array, current page, total pages, and total post count
-- Uses SQLite with proper error handling
-- Includes validation for invalid page numbers"
-```
-
-### Example Where I Corrected AI Output
-
-**AI's Initial Like Toggle Implementation:**
-```javascript
-// AI suggested this approach
-const handleLike = async (postId) => {
-  await axios.post(`/api/posts/${postId}/like`);
-  fetchPosts(); // Refetch all posts
-};
-```
-
-**My Refactored Version:**
-```javascript
-// Optimistic UI update without refetching entire list
-const handleLike = async (postId) => {
-  const isLiked = likedPosts.includes(postId);
-  
-  // Optimistic update
-  setPosts(posts.map(post => 
-    post.id === postId 
-      ? { ...post, likes: post.likes + (isLiked ? -1 : 1) }
-      : post
-  ));
-  
-  setLikedPosts(isLiked 
-    ? likedPosts.filter(id => id !== postId)
-    : [...likedPosts, postId]
-  );
-  
-  try {
-    await axios.post(`/api/posts/${postId}/like`);
-  } catch (error) {
-    // Revert on error
-    setPosts(posts);
-    setLikedPosts(isLiked ? [...likedPosts, postId] : likedPosts.filter(id => id !== postId));
-  }
-};
-```
-
-**Why This Is Better:**
-- Immediate UI feedback (optimistic update)
-- No unnecessary network request to refetch all posts
-- Error handling with rollback mechanism
-- Better user experience with instant visual feedback
-- Reduces server load by avoiding redundant GET requests
-
-## Trade-offs + Next Improvements
-
-### Current Trade-offs
-1. **Local Storage for Likes**: Using localStorage for likes/saves means they're device-specific and lost on browser clear. Better approach would be user authentication with server-side persistence.
-
-2. **Image Handling**: Currently stores image URLs directly. For production, would implement proper image upload to cloud storage (AWS S3, Cloudinary) with image optimization and CDN delivery.
-
-3. **Basic Pagination**: Using offset-based pagination which can have performance issues with large datasets. Cursor-based pagination would be more efficient.
-
-4. **No Real-time Updates**: Posts don't update in real-time when others post. Would implement WebSocket connections (Socket.io) for live feed updates.
-
-5. **Limited Validation**: Basic input validation only. Would add comprehensive validation library (Zod/Joi), rate limiting, and input sanitization.
-
-### Next Improvements
-1. **Authentication System**: Add JWT-based auth with user registration/login, allowing personalized feeds and proper like/save persistence.
-
-2. **Image Upload**: Implement drag-and-drop image upload with preview, compression, and cloud storage integration.
-
-3. **Comments System**: Add nested comments with real-time updates and mention functionality.
-
-4. **Infinite Scroll**: Replace "Load More" button with intersection observer for true infinite scroll experience.
-
-5. **Search & Filters**: Add search by caption/author and filter by date/popularity with Elasticsearch or full-text search.
-
-6. **Performance Optimization**: Implement React.memo, useMemo, lazy loading, and virtual scrolling for better performance with thousands of posts.
-
-7. **Testing**: Add comprehensive test coverage with Jest (unit), React Testing Library (component), and Supertest (API).
-
-8. **Deployment**: Containerize with Docker, set up CI/CD pipeline, and deploy to cloud platforms (Vercel/Railway/AWS).
-
----
-
-## License
-MIT
-
-## Author
-Nithin - B.Tech CSE Final Year Student
