@@ -2,218 +2,62 @@ import { useState, useEffect, useRef } from 'react';
 import './PostViewer.css';
 
 function PostViewer({
-  posts = [],
-  initialIndex = 0,
+  posts,
+  initialIndex,
   onClose,
-  currentUser,
   onLike,
   onSave,
   onEdit,
-  onDelete,
-  likedPosts = [],
-  savedPosts = [],
+  likedPosts,
+  savedPosts
 }) {
-  const [currentIndex, setCurrentIndex] = useState(initialIndex);
-  const [showMenu, setShowMenu] = useState(false);
+  const [index, setIndex] = useState(initialIndex);
+  const startY = useRef(0);
+  const endY = useRef(0);
 
-  const viewerRef = useRef(null);
-  const touchStartY = useRef(0);
-  const touchEndY = useRef(0);
-
-  // ✅ keep index in sync when opening new post
   useEffect(() => {
-    setCurrentIndex(initialIndex);
+    setIndex(initialIndex);
   }, [initialIndex]);
 
-  const currentPost = posts[currentIndex];
-  if (!currentPost) return null;
+  const post = posts[index];
+  if (!post) return null;
 
-  const isOwner = currentPost.creator_id === currentUser;
-  const isLiked = likedPosts.includes(currentPost.id);
-  const isSaved = savedPosts.includes(currentPost.id);
+  const isLiked = likedPosts.includes(post.id);
+  const isSaved = savedPosts.includes(post.id);
 
-  const isVideo =
-    currentPost.image?.includes('.mp4') ||
-    currentPost.image?.includes('.webm') ||
-    currentPost.type === 'video';
-
-  const handleNext = () => {
-    if (currentIndex < posts.length - 1) {
-      setCurrentIndex((i) => i + 1);
-      setShowMenu(false);
-    }
-  };
-
-  const handlePrevious = () => {
-    if (currentIndex > 0) {
-      setCurrentIndex((i) => i - 1);
-      setShowMenu(false);
-    }
-  };
-
-  /* Keyboard navigation (desktop) */
-  useEffect(() => {
-    const onKey = (e) => {
-      if (e.key === 'Escape') onClose();
-      if (e.key === 'ArrowRight') handleNext();
-      if (e.key === 'ArrowLeft') handlePrevious();
-    };
-
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-  }, [currentIndex]);
-
-  /* Touch swipe (mobile) */
-  const handleTouchStart = (e) => {
-    touchStartY.current = e.touches[0].clientY;
-  };
-
-  const handleTouchMove = (e) => {
-    touchEndY.current = e.touches[0].clientY;
-  };
-
-  const handleTouchEnd = () => {
-    const diff = touchStartY.current - touchEndY.current;
-    if (diff > 50) handleNext();
-    if (diff < -50) handlePrevious();
-  };
+  const next = () => index < posts.length - 1 && setIndex(i => i + 1);
+  const prev = () => index > 0 && setIndex(i => i - 1);
 
   return (
     <div
       className="post-viewer-overlay"
-      ref={viewerRef}
-      onTouchStart={handleTouchStart}
-      onTouchMove={handleTouchMove}
-      onTouchEnd={handleTouchEnd}
+      onTouchStart={e => (startY.current = e.touches[0].clientY)}
+      onTouchMove={e => (endY.current = e.touches[0].clientY)}
+      onTouchEnd={() => {
+        if (startY.current - endY.current > 50) next();
+        if (endY.current - startY.current > 50) prev();
+      }}
     >
-      {/* Close */}
-      <button className="viewer-close-btn" onClick={onClose}>
-        ✕
-      </button>
+      <button className="viewer-close-btn" onClick={onClose}>✕</button>
 
-      {/* Desktop navigation */}
-      {currentIndex > 0 && (
-        <button className="viewer-nav-btn prev" onClick={handlePrevious}>
-          ‹
-        </button>
-      )}
-
-      {currentIndex < posts.length - 1 && (
-        <button className="viewer-nav-btn next" onClick={handleNext}>
-          ›
-        </button>
-      )}
+      <button className="viewer-nav-btn prev" onClick={prev}>‹</button>
+      <button className="viewer-nav-btn next" onClick={next}>›</button>
 
       <div className="viewer-content">
-        {/* MEDIA */}
-        <div className="viewer-media">
-          {isVideo ? (
-            <video
-              src={currentPost.image}
-              className="viewer-video"
-              controls
-            />
-          ) : (
-            <img
-              src={currentPost.image}
-              alt={currentPost.caption}
-              className="viewer-image"
-            />
-          )}
-        </div>
+        <img src={post.image} alt="" className="viewer-image" />
 
-        {/* SIDEBAR */}
         <div className="viewer-sidebar">
-          {/* TOP */}
-          <div className="viewer-top">
-            <div className="viewer-header">
-              <div className="viewer-author">
-                <div className="viewer-avatar">
-                  {currentPost.author.charAt(0).toUpperCase()}
-                </div>
+          <p>{post.caption}</p>
 
-                <div className="viewer-author-info">
-                  <span className="viewer-author-name">
-                    {currentPost.author}
-                  </span>
-                  <span className="viewer-post-time">5h ago</span>
-                </div>
-              </div>
-
-              {isOwner && (
-                <div className="viewer-menu">
-                  <button
-                    className="viewer-menu-btn"
-                    onClick={() => setShowMenu(!showMenu)}
-                  >
-                    ⋮
-                  </button>
-
-                  {showMenu && (
-                    <div className="viewer-dropdown">
-                      <button
-                        onClick={() => {
-                          onEdit(currentPost);
-                          onClose();
-                        }}
-                      >
-                        ✏️ Edit
-                      </button>
-
-                      <button
-                        className="delete"
-                        onClick={() => {
-                          onDelete(currentPost.id);
-                          onClose();
-                        }}
-                      >
-                        🗑️ Delete
-                      </button>
-                    </div>
-                  )}
-                </div>
-              )}
-            </div>
-
-            <div className="viewer-caption">
-              {currentPost.caption}
-            </div>
-          </div>
-
-          {/* BOTTOM (desktop) */}
-          <div className="viewer-bottom">
-            <div className="viewer-actions">
-              <button onClick={() => onLike(currentPost.id)}>
-                {isLiked ? '❤️' : '🤍'} {Math.max(0, currentPost.likes)}
-              </button>
-
-              <button onClick={() => onSave(currentPost.id)}>
-                {isSaved ? '🔖' : '🏷️'}
-              </button>
-            </div>
+          <div className="viewer-actions">
+            <button onClick={() => onLike(post.id)}>
+              {isLiked ? '❤️' : '🤍'} {post.likes}
+            </button>
+            <button onClick={() => onSave(post.id)}>
+              {isSaved ? '🔖 Saved' : '🏷️ Save'}
+            </button>
           </div>
         </div>
-      </div>
-
-      {/* MOBILE FLOATING ACTIONS */}
-      <div className="mobile-actions">
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            onLike(currentPost.id);
-          }}
-        >
-          {isLiked ? '❤️' : '🤍'}
-        </button>
-
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            onSave(currentPost.id);
-          }}
-        >
-          {isSaved ? '🔖' : '🏷️'}
-        </button>
       </div>
     </div>
   );
