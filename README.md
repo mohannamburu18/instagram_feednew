@@ -11,6 +11,8 @@ https://instagram-feednew-jc9l6pudq-mohans-projects-7ac7513d.vercel.app/
 Track C — Feed (Instagram-style consumption)
     I chose Track C to demonstrate an interactive feed with pagination, modal post viewing, and social actions such as like and save. This track best showcases frontend UX design, API integration, and state management in a production-minded way.
     
+<br><br>
+    
 
 Ⅱ. Features Implemented 🚀
 
@@ -38,6 +40,7 @@ Persistence 💾
     • localStorage for likes and saved posts
     
 
+<br><br>
 Ⅲ. Tech Stack 🧩
 
 Frontend
@@ -55,6 +58,7 @@ Deployment ☁️
     • Backend: Render
     
 
+<br><br>
 Ⅳ. How to Run the Project 🏃‍♂️
 
 Backend (Server)
@@ -86,6 +90,7 @@ http://localhost:5173
 
   
 
+<br><br>
 Ⅴ. API Endpoints 🔗
 Method	Endpoint	Description
 GET	/api/posts?page=1&limit=12	Get paginated posts
@@ -93,6 +98,8 @@ POST	/api/posts/:id/like	Like a post
 POST	/api/posts	Create new post
 DELETE	/api/posts/:id	Delete post
 GET	/api/health	Health check
+
+<br><br>
 Ⅵ. Data Model 🗄️
 
 posts table
@@ -105,6 +112,7 @@ image	TEXT
 likes	INTEGER
 creator_id	TEXT
 created_at	TIMESTAMP
+<br><br>
 Ⅶ. AI Collaboration Log 🤖
 
 
@@ -142,6 +150,7 @@ Correction Applied
       – viewer-sidebar (right – author, caption, actions)
 
 
+<br><br>
 Ⅷ. Trade-offs & Next Improvements 🔮
 
     • Saved posts are stored locally instead of backend (intentional simplification)
@@ -151,12 +160,14 @@ Correction Applied
     • Future: Add real user authentication and profiles
     
 
+<br><br>
 Ⅸ. Sample Data 🧪
 
     • Included via SQLite seed data
     • Images loaded from static URLs
     
 
+<br><br>
 Ⅹ. Demo Video 🎥
 
     https://drive.google.com/file/d/1Df1oazf72RH6_KPR6UJ5EZgXff9e69eM/view?usp=sharing
